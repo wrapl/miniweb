@@ -1,0 +1,81 @@
+#!/usr/sbin/node
+Error.stackTraceLimit = Infinity;
+
+const babel = require("babel-core");
+const babylon = require("babylon");
+const generate = require("babel-generator").default;
+const filewalker = require('filewalker');
+const fs = require("fs");
+const slashes = require("slashes");
+const unquote = require("unquote");
+const transform_jsx = require("babel-plugin-transform-react-jsx")(babel);
+const traverse = require("babel-traverse").default;
+
+var srcDir = process.argv[2]
+var destDir = process.argv[3]
+
+function State() {
+	this.store = {};
+}
+
+State.prototype.set = function(key, value) {
+	this.store[key] = value;
+}
+
+State.prototype.get = function(key) {
+	return this.store[key];
+}
+
+State.prototype.read = function(key) {
+	return this.store[key];
+}
+
+if (!fs.existsSync(destDir)) {
+	fs.mkdirSync(destDir);
+}
+
+filewalker(srcDir).on("file", function(file, stat, path) {
+	if (file.endsWith(".po")) {
+		console.log("Found: ", path);
+		var lines = fs.readFileSync(path, 'utf8').split("\n");
+		var params, msgid;
+		const output = fs.createWriteStream(destDir + "/" + file.split(".")[0] + ".js");
+		output.write("define({");
+		var conjunction = "\n";
+		lines.forEach(function(line) {
+			if (line.startsWith("#. ")) {
+				params = line.substr(3).split(",");
+			} else if (line.startsWith("msgid ")) {
+				msgid = line.substr(6).trim();
+			} else if (line.startsWith("msgstr ")) {
+				var code = slashes.strip(unquote(line.substr(7).trim()));
+				if (code === "") return;
+				console.log(code);
+				var ast = babylon.parse("<div>" + code + "</div>", {
+					sourceType: "script",
+					plugins: ["jsx"]
+				});
+				var children = ast.program.body[0].expression.children;
+				if ((children.length === 1) && (children[0].type === 'JSXText')) {
+					var text = "\"" + slashes.add(children[0].value) + "\"";
+					output.write(conjunction + msgid + ":" + text);
+					conjunction = ",\n";
+				} else {
+					var state = new State();
+					state.file = {ast: ast};
+					state.opts = {pragma: "create"};
+					traverse(ast, transform_jsx.visitor, null, state);
+					var expression = ast.program.body[0].expression;
+					var translation = "function(" + params + ") { return [" +
+						expression.arguments.slice(2).map(function(child) {
+							return generate(child, {compact: true}).code;
+						}).toString() +
+					"]; }";
+					output.write(conjunction + msgid + ":" + translation);
+					conjunction = ",\n";
+				}
+			}
+		});
+		output.write("\n});");
+	}
+}).walk();

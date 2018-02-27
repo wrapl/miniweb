@@ -1,0 +1,86 @@
+#!/usr/sbin/node
+const babylon = require("babylon");
+const traverse = require("babel-traverse").default;
+const filewalker = require('filewalker');
+const fs = require("fs");
+const cp = require('child_process');
+
+var srcDir = process.argv[2]
+
+//var data = fs.readFileSync("../../messages.json", "utf8");
+//var messages = JSON.parse(data)
+var messages = {}
+
+filewalker(srcDir).on("file", function(file, stat, path) {
+	if (file.endsWith(".js")) {
+		//console.log("Found: ", path);
+		var data = fs.readFileSync(path, 'utf8');
+		var ast = babylon.parse(data, {
+			sourceType: "module",
+			plugins: ["jsx"]
+		});
+		traverse(ast, {
+			CallExpression: function(path) {
+				var callee = path.node.callee;
+				if (callee.type === "Identifier" && callee.name === "tr") {
+					var key = path.node.arguments[0].value;
+					var message = messages[key];
+					if (!message) {
+						message = {refs: [file + ":" + path.node.loc.start.line]};
+						if (path.node.arguments.length > 1) {
+							message.params = path.node.arguments[1].properties.map(function(node) {
+								return node.key.name;
+							});
+						}
+						messages[key] = message;
+					} else {
+						message.refs.push(file + ":" + path.node.loc.start.line);
+					}
+				}
+			},
+			JSXElement: function(path) {
+				var attributes = path.node.openingElement.attributes;
+				var key, params = [];
+				if (attributes) attributes.forEach(function(attribute) {
+					if (attribute.name.name === "tr") {
+						key = attribute.value.value;
+					} else if (attribute.name.name.startsWith("tr-")) {
+						params.push(attribute.name.name.substr(3));
+					}
+				});
+				if (key) {
+					var message = messages[key];
+					if (!message) {
+						message = {refs: [file + ":" + path.node.loc.start.line]};
+						if (params.length > 0) message.params = params;
+						messages[key] = message;
+					} else {
+						message.refs.push(file + ":" + path.node.loc.start.line);
+					}
+				}
+			}
+		});
+	}
+}).on("done", function() {
+	const output = fs.createWriteStream("messages.pot");
+	output.write("# TRANSLATIONS\n");
+	output.write("msgid \"\"\n");
+	output.write("msgstr \"\"");
+	for (var key in messages) {
+		var message = messages[key];
+		output.write("\n");
+		message.refs.forEach(function(ref) {
+			output.write("#: " + ref + "\n");
+		});
+		if (message.params) output.write("#. " + message.params.toString() + "\n");
+		output.write("msgid \"" + key + "\"\n");
+		output.write("msgstr \"\"\n");
+	}
+	output.end();
+	filewalker("lang").on("file", function(file, stat, path) {
+		if (file.endsWith(".po")) {
+			console.log("msgmerge -U " + path + " messages.pot");
+			cp.execSync("msgmerge -U " + path + " messages.pot");
+		}
+	}).walk();
+}).walk();

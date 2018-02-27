@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/bulma.css"/>
+	<link rel="stylesheet" href="css/app.css"/>
+	<link rel="stylesheet" href="css/fa-solid.css"/>
+	<link rel="stylesheet" href="css/fontawesome.css"/>
+	<title>App</title>
+	<script src="js/moment.min.js"/>
+	<script src="js/papaparse.min.js"/>
+	<script src="js/require.js"/>
+</head>
+<body>
+	<script>
+		require.config({baseUrl: 'js'});
+		require(['Lib'], function(_Lib) {
+			require(['Demo'], function(_Demo) {
+				_Demo.start();
+			});
+		});
+	</script>
+</body>
+</html>
