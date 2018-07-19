@@ -50,7 +50,7 @@ function onSocketMessage(event) {
 	var index = message[0];
 	switch (index) {
 	case 'reload':
-		location = location;
+		location.reload();
 		return;
 	case 'alert':
 		send('alert/read', {}, publishEvents);
@@ -63,7 +63,7 @@ function onSocketMessage(event) {
 			t.responses.add(index);
 			setTimeout(clearResponses, 10000);
 		}
-		var status = message[1];
+		var success = message[1];
 		var response = message[2];
 		var request = t.requests[index];
 		if (request) {
@@ -71,17 +71,18 @@ function onSocketMessage(event) {
 			delete t.requests[index];
 			var times = t.times;
 			times.push(new Date().valueOf() - request.time);
-			if (times.length > 50) {
+			/*if (times.length > 50) {
 				t.times = [];
 				send('log/times', {times: times});
-			}
+			}*/
 			try {
-				if (status === null) {
+				if (success) {
 					request.success(response);
 				} else {
-					request.failure(status, response);
+					request.failure(response);
 				}
 			} catch (error) {
+				console.log(error);
 				send('log/error', {message: event.data, error: error.toString(), stack: error.stack});
 			}
 		}
@@ -93,7 +94,6 @@ function onSocketMessage(event) {
 export function connect(success, failure) {
 	if (!WebSocket) throw NotSupportedError;
 	t = t || new T();
-	window.request = _WebSocket.send;
 	switch (t.state) {
 	case 'connecting': return;
 	case 'open': t.socket.close();
@@ -107,7 +107,8 @@ export function connect(success, failure) {
 	to = to == -1 ? url.length : to;
 	url = url.substring(0, to);
 	var address = webSocketProtocol + "//" + url + '/socket';
-	var socket = t.socket = new WebSocket(address);
+	console.debug('connecting to ' + address);
+	var socket = app.socket = t.socket = new WebSocket(address);
 	socket.onopen = function(event) {
 		console.debug('websocket onopen', event);
 		t.error = null;
@@ -134,7 +135,7 @@ function sendNext() {
 	while (t.state === 'open') {
 		var request = t.queue.pop();
 		if (!request) return;
-		if (request.canRetry) request.timeout = setTimeout(resend, 2000, request);
+		if (request.canRetry) request.timeout = setTimeout(resend, 6000, request);
 		t.socket.send(request.data);
 	}
 }
@@ -149,7 +150,6 @@ function resend(request) {
 }
 
 function defaultCallback() {
-	console.log(arguments)
 }
 
 export function send(method, data, success, failure) {
@@ -162,6 +162,16 @@ export function send(method, data, success, failure) {
 		failure: failure || defaultCallback
 	};
 	t.requests[index] = request;
+	t.queue.push(request);
+	if (t.state === 'open') {
+		sendNext();
+	} else if (t.state === 'closed') {
+		connect(sendNext);
+	}
+}
+
+export function sendBinary(data) {
+	var request = {data: data};
 	t.queue.push(request);
 	if (t.state === 'open') {
 		sendNext();

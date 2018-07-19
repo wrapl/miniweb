@@ -1,12 +1,8 @@
 #!/bin/sh
-trap "exit" INT TERM ERR
-trap "kill 0" EXIT
-
-./node_modules/babel-cli/bin/babel.js -w js --out-dir ../../web/js &
-find css -name "*.scss" | entr -d sass css/app.scss:../../web/css/app.css &
-find js -name "*.js" | entr -d ./extract js &
-find . -name "*.xhtml" | entr cp *.xhtml ../../web/ &
+#ls css/app.scss | entr css/app.scss sass css/app.scss:../../web/css/app.css &
+ls css/app.scss | entr sass css/app.scss:../../web/css/app.css &
+#find js/ -name "*.js" | entr ./extract &
+find js/ -name "*.js" | entr ./node_modules/babel-cli/bin/babel.js js --out-dir ../../web/js &
+ls *.xhtml | entr cp -v /_ ../../web
 #./node_modules/requirejs/bin/r.js -o build.js
 #./extract
-
-wait
