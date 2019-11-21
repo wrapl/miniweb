@@ -1,5 +1,3 @@
-import * as _Class from "lib/Class";
-
 var currentLocale = "en_IE";
 
 window.tr = function(key, attrs) {

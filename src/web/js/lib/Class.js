@@ -227,7 +227,7 @@ function baseWhenPropertyNotAndMask(base, property, mask, callback) {
 }
 
 function disconnectArray(connections) {
-	connections.forEach(disconnect);
+	connections.forEach(connection => connection.disconnect());
 }
 
 const ConnectionT = _class(connectionInit, null, {
@@ -287,4 +287,20 @@ function propertyConnectionDisconnect(connection) {
 	delete object.propertySystem.properties[connection.property];
 	if (Object.keys(object.propertySystem.connections).length > 0) return;
 	delete object.propertySystem;
+}
+
+const IntervalConnectionT = _class(intervalConnectionInit, ConnectionT, {
+	disconnect: intervalConnectionDisconnect
+});
+
+function intervalConnectionInit(connection, args) {
+	connection.interval = setInterval.apply(null, args);
+}
+
+function intervalConnectionDisconnect(connection) {
+	clearInterval(connection.interval);
+}
+
+window.connectInterval = function(callback, interval) {
+	return new IntervalConnectionT(arguments);
 }

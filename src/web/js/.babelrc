@@ -1,0 +1,13 @@
+{
+	"compact": true,
+	"comments": false,
+	"plugins": [
+		["@babel/transform-modules-amd", {"noInterop": "true"}],
+		"@babel/transform-arrow-functions",
+		"@babel/transform-flow-strip-types",
+		"@babel/transform-block-scoping",
+		"@babel/transform-block-scoped-functions",
+		"@babel/transform-spread",
+		["@babel/transform-react-jsx", {"pragma": "create"}]
+	]
+}
