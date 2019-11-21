@@ -1,2 +1,14 @@
 #!/bin/sh
-npm install babel-cli filewalker slashes unquote babel-plugin-transform-react-jsx babel-plugin-transform-es2015-modules-amd babel-plugin-transform-es2015-arrow-functions babel-plugin-transform-flow-strip-types babel-plugin-transform-es2015-block-scoping babel-plugin-transform-es2015-block-scoped-functions babel-plugin-transform-es2015-spread
+npm install \
+	@babel/core \
+	@babel/cli \
+	filewalker \
+	slashes \
+	unquote \
+	@babel/plugin-transform-react-jsx \
+	@babel/plugin-transform-modules-amd \
+	@babel/plugin-transform-arrow-functions \
+	@babel/plugin-transform-flow-strip-types \
+	@babel/plugin-transform-block-scoping \
+	@babel/plugin-transform-block-scoped-functions \
+	@babel/plugin-transform-spread

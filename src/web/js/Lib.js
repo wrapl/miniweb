@@ -482,6 +482,15 @@ function parseQuery(query) {
 	return result;
 }
 
+function updateClass(self, value, old, element, classes) {
+	if (old !== null) {
+		element.removeClass(classes[old])
+	} else {
+		for (old in classes) element.removeClass(classes[old])
+	}
+	element.addClass(classes[value])
+}
+
 window.captureMouse = captureMouse;
 window.releaseMouse = releaseMouse;
 window.create = create;
@@ -495,3 +504,4 @@ window.propCall = propCall;
 window.upload = upload;
 window.requestWithSpinner = requestWithSpinner;
 window.parseQuery = parseQuery;
+window.updateClass = updateClass;

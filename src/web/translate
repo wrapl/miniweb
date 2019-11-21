@@ -11,8 +11,9 @@ const unquote = require("unquote");
 const transform_jsx = require("babel-plugin-transform-react-jsx")(babel);
 const traverse = require("babel-traverse").default;
 
-var srcDir = process.argv[2]
-var destDir = process.argv[3]
+var srcDir = process.argv[2];
+var destDir = process.argv[3];
+var langs = [];
 
 function State() {
 	this.store = {};
@@ -37,9 +38,10 @@ if (!fs.existsSync(destDir)) {
 filewalker(srcDir).on("file", function(file, stat, path) {
 	if (file.endsWith(".po")) {
 		console.log("Found: ", path);
+		langs.push(file.split(".")[0]);
 		var lines = fs.readFileSync(path, 'utf8').split("\n");
 		var params, msgid;
-		const output = fs.createWriteStream(destDir + "/" + file.split(".")[0] + ".js");
+		var output = fs.createWriteStream(destDir + "/" + file.split(".")[0] + ".js");
 		output.write("define({");
 		var conjunction = "\n";
 		lines.forEach(function(line) {
@@ -77,5 +79,13 @@ filewalker(srcDir).on("file", function(file, stat, path) {
 			}
 		});
 		output.write("\n});");
+		output.close();
 	}
+}).on("done", function() {
+	console.log("Langs: ", langs);
+	var output = fs.createWriteStream(destDir + ".js");
+	output.write("define(");
+	output.write(JSON.stringify({langs: langs}));
+	output.write(");");
+	output.close();
 }).walk();
