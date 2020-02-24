@@ -32,8 +32,10 @@ export function init(t, defaultView) {
 			<span className={"flag-icon flag-icon-" + country}/> {isoLangs[iso].nativeName}
 		</div>
 	});
-	t.element.appendChild(<div>{langElements}</div>);
-	t.element.appendChild(taskListView.element);
+	t.element.replaceChildren(
+		<div>{langElements}</div>,
+		taskListView.element
+	);
 }
 
 export function start(view) {
