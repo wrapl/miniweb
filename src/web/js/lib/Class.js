@@ -146,7 +146,7 @@ function baseConnectProperty(base, property, callback) {
 		enumerable: true,
 		get: function() { return this.propertySystem.properties[property] },
 		set: function(newValue) {
-		    var properties = this.propertySystem.properties;
+			var properties = this.propertySystem.properties;
 			var oldValue = properties[property];
 			if (oldValue == newValue) return;
 			properties[property] = newValue;

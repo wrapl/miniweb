@@ -12,3 +12,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: js/demo/TaskListView.js:21
+msgid "TITLE"
+msgstr "Teideal"
+
+#: js/demo/TaskListView.js:21
+msgid "ACTIONS"
+msgstr "Gníomhartha"

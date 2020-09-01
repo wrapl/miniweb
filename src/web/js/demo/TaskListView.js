@@ -1,4 +1,6 @@
-export const T = _class(init, null, {
+import * as _Widget from "ui/Widget";
+
+export const T = _class(init, _Widget.T, {
 	destroy: destroy
 });
 
@@ -13,8 +15,8 @@ var taskStates = {
 	complete: "complete"
 };
 
-function init(t, taskList) {
-	t.taskList = taskList;
+function init(t, attrs) {
+	let taskList = attrs.taskList;
 	var taskViews = t.taskViews = {};
 	var newTaskTitleInput = <input className="input" type="text" placeholder="New Task ..."/>;
 	var tasksElement = t.tasksElement = <table className="table">
@@ -23,10 +25,10 @@ function init(t, taskList) {
 
 	function createTask() {
 		var title = newTaskTitleInput.value;
-		if (title.length > 0) t.taskList.createTask(title);
+		if (title.length > 0) taskList.createTask(title);
 	}
 
-	t.element = <div prop-taskList={taskList} className="task-list">
+	_Widget.init(t, {}, <div prop-taskList={taskList} className="task-list">
 		<div className="field has-addons">
 			<div className="control">{newTaskTitleInput}</div>
 			<div className="control">
@@ -34,7 +36,7 @@ function init(t, taskList) {
 			</div>
 		</div>
 		<div>{tasksElement}</div>
-	</div>;
+	</div>);
 
 	t.connectDisconnect("destroyed",
 		taskList.connect("task-created", (taskList, task) => {

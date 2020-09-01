@@ -1,3 +1,10 @@
 # TRANSLATIONS
 msgid ""
 msgstr ""
+#: js/demo/TaskListView.js:21
+msgid "TITLE"
+msgstr ""
+
+#: js/demo/TaskListView.js:21
+msgid "ACTIONS"
+msgstr ""

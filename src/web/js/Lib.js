@@ -102,7 +102,7 @@ extendPrototype(Element, {
 		Array.prototype.forEach.call(arguments, child => {
 			if (!child) {
 			} else if (child instanceof Array) {
-				this.appendChildren.apply(this, child);
+				this.prependChildren.apply(this, child);
 			} else if (child instanceof _Widget.T) {
 				this.prependChild(child.element);
 			} else if (typeof child === "string") {
@@ -189,6 +189,44 @@ extendPrototype(Array, {
 		return result;
 	}
 });
+
+function create(tag, attrs) {
+	var children = Array.prototype.slice.call(arguments, 2);
+	var element, key, params = [];
+	if (typeof tag === 'string') {
+		element = document.createElement(tag);
+		for (var attr in attrs) {
+			if (attr.startsWith("on-")) {
+				element.addEventListener(attr.substring(3), attrs[attr]);
+			} else if (attr.startsWith("prop-")) {
+				element.setProperty(attr.substring(5), attrs[attr]);
+			} else if (attr === "tr") {
+				key = attrs[attr];
+			} else if (attr.startsWith("tr-")) {
+				params.push(attrs[attr]);
+			} else {
+				element[attr] = attrs[attr];
+			}
+		}
+		if (key) {
+			element.tr = [key, params];
+			_L20n.translate(key, params, translation => element.appendChildren(translation));
+		} else if (children.length) {
+			element.appendChildren(children);
+		}
+	} else {
+		element = new tag(attrs);
+		for (var i = 0; i < children.length; ++i) {
+			let child = children[i];
+			if (child instanceof _Widget.T) {
+				element.addChild(child);
+			} else {
+				element.addChild(new _Widget.T({}, child));
+			}
+		}
+	}
+	return element;
+}
 
 window._enum = function() {
 	var properties = {};
@@ -283,36 +321,6 @@ function captureMouseMove(onmousemove, onmouseup) {
 	}
 	document.addEventListener("mousemove", capturedMousemove, true);
 	document.addEventListener("mouseup", capturedMouseup, true);
-}
-
-function create(tag, attrs) {
-	var children = Array.prototype.slice.call(arguments, 2);
-	var element, key, params = [];
-	if (typeof tag === 'string') {
-		element = document.createElement(tag);
-		for (var attr in attrs) {
-			if (attr.startsWith("on-")) {
-				element.addEventListener(attr.substring(3), attrs[attr]);
-			} else if (attr.startsWith("prop-")) {
-				element.setProperty(attr.substring(5), attrs[attr]);
-			} else if (attr === "tr") {
-				key = attrs[attr];
-			} else if (attr.startsWith("tr-")) {
-				params.push(attrs[attr]);
-			} else {
-				element[attr] = attrs[attr];
-			}
-		}
-		if (key) {
-			element.tr = [key, params];
-			_L20n.translate(key, params, translation => element.appendChildren(translation));
-		} else if (children.length) {
-			element.appendChildren(children);
-		}
-	} else {
-		element = tag(attrs, children);
-	}
-	return element;
 }
 
 function createTextNode(text) {
@@ -491,8 +499,16 @@ function updateClass(self, value, old, element, classes) {
 	element.addClass(classes[value])
 }
 
+var newId = function() {
+	var counter = 0
+	return function() {
+		return "_" + (++counter).toString(36)
+	}
+}()
+
 window.captureMouse = captureMouse;
 window.releaseMouse = releaseMouse;
+window.captureMouseMove = captureMouseMove;
 window.create = create;
 window.subscribe = subscribe;
 window.publish = publish;
@@ -505,3 +521,4 @@ window.upload = upload;
 window.requestWithSpinner = requestWithSpinner;
 window.parseQuery = parseQuery;
 window.updateClass = updateClass;
+window.newId = newId;

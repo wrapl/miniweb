@@ -375,8 +375,8 @@ function lcpsolve(mmat, qvec, tol) {
 	for (var i = 0; i < n; ++i) {
 		var temp = tableau[i][m - 1];
 		if (min > temp) {
-		    min = temp;
-		    locat = i;
+			min = temp;
+			locat = i;
 		}
 	}
 	basis[locat] = m - 2;
