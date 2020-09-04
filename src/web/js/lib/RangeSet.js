@@ -7,8 +7,8 @@ export const T = _class(init, null, {
     toString: toString
 });
 
-function init(t, initial) {
-    t.ranges = null;
+function init(self, initial) {
+    self.ranges = null;
     if (initial instanceof T) {
 
     } else if (typeof initial === 'string') {
@@ -21,7 +21,7 @@ function init(t, initial) {
                 if (prev) {
                     prev.next = range;
                 } else {
-                    t.ranges = range;
+                    self.ranges = range;
                 }
                 prev = range;
             });
@@ -29,35 +29,35 @@ function init(t, initial) {
     }
 }
 
-function size(t) {
+function size(self) {
     let size = 0;
-    for (let range = t.ranges; range; range = range.next) {
+    for (let range = self.ranges; range; range = range.next) {
         size += range.hi - range.lo + 1;
         range = range.next;
     }
     return size;
 }
 
-function min(t) {
-    return t.ranges.lo;
+function min(self) {
+    return self.ranges.lo;
 }
 
-function max(t) {
-    var range = t.ranges;
+function max(self) {
+    var range = self.ranges;
     while (range.next) range = range.next;
     return range.hi;
 }
 
-function add(t, lo, hi) {
+function add(self, lo, hi) {
     if (hi === undefined) {
         const element = lo;
         let prev = null;
-        for (let range = t.ranges; range; range = range.next) {
+        for (let range = self.ranges; range; range = range.next) {
             if (range.lo > element + 1) {
                 if (prev) {
                     prev.next = {lo: element, hi: element, next: null};
                 } else {
-                    t.ranges = {lo: element, hi: element, next: null};
+                    self.ranges = {lo: element, hi: element, next: null};
                 }
                 return true;
             } else if (range.lo === element + 1) {
@@ -81,7 +81,7 @@ function add(t, lo, hi) {
         if (prev) {
             prev.next = {lo: element, hi: element, next: null};
         } else {
-            t.ranges = {lo: element, hi: element, next: null};
+            self.ranges = {lo: element, hi: element, next: null};
         }
         return true;
     } else {
@@ -89,11 +89,11 @@ function add(t, lo, hi) {
     }
 }
 
-function remove(t, lo, hi) {
+function remove(self, lo, hi) {
     if (hi === undefined) {
         const element = lo;
         let prev = null;
-        for (let range = t.ranges; range; range = range.next) {
+        for (let range = self.ranges; range; range = range.next) {
             if (element < range.lo) {
                 return false;
             } else if (element > range.hi) {
@@ -104,7 +104,7 @@ function remove(t, lo, hi) {
                     if (prev) {
                         prev.next = range.next;
                     } else {
-                        t.ranges = range.next;
+                        self.ranges = range.next;
                     }
                 } else {
                     range.lo = element + 1;
@@ -119,7 +119,7 @@ function remove(t, lo, hi) {
                 if (prev) {
                     prev.next = next;
                 } else {
-                    t.ranges = next;
+                    self.ranges = next;
                 }
                 return true;
             }
@@ -130,8 +130,8 @@ function remove(t, lo, hi) {
     }
 }
 
-function toString(t) {
-    let range = t.ranges;
+function toString(self) {
+    let range = self.ranges;
     if (!range) return '';
     let string = range.lo.toString();
     if (range.hi > range.lo) string += ':' + range.hi.toString();

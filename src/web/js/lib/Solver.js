@@ -144,76 +144,76 @@ export const T = _class(init, null, {
 	clear: clear
 });
 
-function init(t) {
-	t.variables = {};
-	t.constraints = {};
-	t.stays = {};
-	t.varSuggestions = {};
-	t.exprSuggestions = [];
-	t.dummy = variable(t, 'dummy', 0);
+function init(self) {
+	self.variables = {};
+	self.constraints = {};
+	self.stays = {};
+	self.varSuggestions = {};
+	self.exprSuggestions = [];
+	self.dummy = variable(self, 'dummy', 0);
 }
 
-function variable(t, name, value) {
+function variable(self, name, value) {
 	var v = new VarT(name, value);
-	t.variables[v.id] = v;
+	self.variables[v.id] = v;
 	return v;
 }
 
-function constant(t, value) {
+function constant(self, value) {
 	return new ExprT(value);
 }
 
-function constrain(t, expr, equal, strength) {
+function constrain(self, expr, equal, strength) {
 	strength = strength || 0;
 	var id = newId();
 	if (equal) {
 		if (strength) {
-			t.constraints[id] = {qerror: expr, strength: strength};
+			self.constraints[id] = {qerror: expr, strength: strength};
 		} else {
-			t.constraints[id] = {equation: expr};
+			self.constraints[id] = {equation: expr};
 		}
 	} else {
 		if (strength) {
-			var error = t.variable('error');
-			t.constraints[id] = {inequality: expr.add(error), lerror: error, strength: strength};
+			var error = self.variable('error');
+			self.constraints[id] = {inequality: expr.add(error), lerror: error, strength: strength};
 		} else {
-			t.constraints[id] = {inequality: expr};
+			self.constraints[id] = {inequality: expr};
 		}
 	}
 	return id;
 }
 
-function unconstrain(t, id) {
-	delete t.constraints[id];
+function unconstrain(self, id) {
+	delete self.constraints[id];
 }
 
-function stay(t, v, strength) {
-	t.stays[v.id] = strength || 0;
+function stay(self, v, strength) {
+	self.stays[v.id] = strength || 0;
 }
 
-function unstay(t, v) {
-	delete t.stays[v.id];
+function unstay(self, v) {
+	delete self.stays[v.id];
 }
 
-function unstayAll(t) {
-	t.stays = {};
+function unstayAll(self) {
+	self.stays = {};
 }
 
-function suggest(t, v, value, strength) {
+function suggest(self, v, value, strength) {
 	if (v) {
 		if (value === null) {
-			t.varSuggestions[v.id] = null;
+			self.varSuggestions[v.id] = null;
 		} else {
-			var suggestion = t.varSuggestions[v.id] = {expr: v.sub(value), strength: strength || 0};
+			var suggestion = self.varSuggestions[v.id] = {expr: v.sub(value), strength: strength || 0};
 		}
 	} else {
-		t.exprSuggestions.push({expr: value, strength: strength || 0});
+		self.exprSuggestions.push({expr: value, strength: strength || 0});
 	}
 }
 
-function clear(t) {
-	t.varSuggestions = {};
-	t.exprSuggestions = [];
+function clear(self) {
+	self.varSuggestions = {};
+	self.exprSuggestions = [];
 }
 
 function zeroFloatArray(n) {
@@ -222,15 +222,15 @@ function zeroFloatArray(n) {
 	return a;
 }
 
-function resolve(t) {
+function resolve(self) {
 	var equations = [];
 	var inequalities = [];
 	var lerror = [];
 	var qerror = [];
 	//console.debug('\n\n\n******************************* Resolving *******************************')
-	//console.debug(t.constraints, t.varSuggestions, t.stays)
-	for (var id in t.constraints) {
-		var constraint = t.constraints[id];
+	//console.debug(self.constraints, self.varSuggestions, self.stays)
+	for (var id in self.constraints) {
+		var constraint = self.constraints[id];
 		if (constraint.equation) equations.push(constraint.equation);
 		if (constraint.inequality) inequalities.push(constraint.inequality);
 		if (constraint.lerror) lerror.push({expr: constraint.lerror, strength: constraint.strength});
@@ -240,24 +240,24 @@ function resolve(t) {
 	//for (var i = 0; i < inequalities.length; ++i) console.debug(inequalities[i].string() + ' ⩾ 0')
 	//for (var i = 0; i < lerror.length; ++i) console.debug(lerror[i].strength + '(' + lerror[i].expr.string() + ')')
 	//for (var i = 0; i < qerror.length; ++i) console.debug(qerror[i].strength + '(' + qerror[i].expr.string() + ')²')
-	for (var id in t.varSuggestions) {
-		var suggestion = t.varSuggestions[id];
+	for (var id in self.varSuggestions) {
+		var suggestion = self.varSuggestions[id];
 		if (suggestion === null) continue;
 		if (suggestion.strength) { qerror.push(suggestion) } else { equations.push(suggestion.expr) }
 	}
-	for (var i = 0; i < t.exprSuggestions.length; ++i) {
-		var suggestion = t.exprSuggestions[i];
+	for (var i = 0; i < self.exprSuggestions.length; ++i) {
+		var suggestion = self.exprSuggestions[i];
 		if (suggestion.strength) { qerror.push(suggestion) } else { equations.push(suggestion.expr) }
 	}
-	for (var id in t.stays) if (!(id in t.varSuggestions)) {
-		var v = t.variables[id];
+	for (var id in self.stays) if (!(id in self.varSuggestions)) {
+		var v = self.variables[id];
 		var expr = v.sub(v.value || 0);
-		if (t.stays[id]) { qerror.push({expr: expr, strength: t.stays[id]}) } else { equations.push(expr) }
+		if (self.stays[id]) { qerror.push({expr: expr, strength: self.stays[id]}) } else { equations.push(expr) }
 	}
 
 	var subs = {}, equation;
 	while ((equation = equations.pop())) {
-		var v; for (var id in equation.terms) {v = t.variables[id]; break}
+		var v; for (var id in equation.terms) {v = self.variables[id]; break}
 		//console.debug(equation, v)
 		equation = equation.div(equation.terms[v.id]);
 		for (var j = 0; j < equations.length; ++j) {
@@ -293,7 +293,7 @@ function resolve(t) {
 		};
 		return false;
 	})
-	inequalities.push(t.dummy);
+	inequalities.push(self.dummy);
 
 	//console.debug(subs, inequalities, lerror, qerror)
 
@@ -341,16 +341,16 @@ function resolve(t) {
 	//console.debug(mmat, qvec)
 
 	var z = lcpsolve(mmat, qvec).z;
-	for (var id in x) t.variables[id].value = z[x[id]];
+	for (var id in x) self.variables[id].value = z[x[id]];
 	for (var id in subs) {
 		var sub = subs[id];
 		var value = sub.constant;
-		for (var id2 in sub.terms) value += sub.terms[id2] * t.variables[id2].value;
-		t.variables[id].value = value;
+		for (var id2 in sub.terms) value += sub.terms[id2] * self.variables[id2].value;
+		self.variables[id].value = value;
 	}
 
 	//console.debug('******************************* Output *******************************')
-	//for (var id in t.variables) console.debug(id, ' = ', t.variables[id].constant)
+	//for (var id in self.variables) console.debug(id, ' = ', self.variables[id].constant)
 }
 
 function lcpsolve(mmat, qvec, tol) {

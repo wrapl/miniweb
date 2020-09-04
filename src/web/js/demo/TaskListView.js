@@ -1,6 +1,6 @@
-import * as _Widget from "ui/Widget";
+import * as Widget from "ui/Widget";
 
-export const T = _class(init, _Widget.T, {
+export const T = _class(init, Widget.T, {
 	destroy: destroy
 });
 
@@ -15,11 +15,11 @@ var taskStates = {
 	complete: "complete"
 };
 
-function init(t, attrs) {
+function init(self, attrs) {
 	let taskList = attrs.taskList;
-	var taskViews = t.taskViews = {};
+	var taskViews = self.taskViews = {};
 	var newTaskTitleInput = <input className="input" type="text" placeholder="New Task ..."/>;
-	var tasksElement = t.tasksElement = <table className="table">
+	var tasksElement = self.tasksElement = <table className="table">
 		<tr><th tr="TITLE"/><th tr="ACTIONS"/></tr>
 	</table>;
 
@@ -28,7 +28,7 @@ function init(t, attrs) {
 		if (title.length > 0) taskList.createTask(title);
 	}
 
-	_Widget.init(t, {}, <div prop-taskList={taskList} className="task-list">
+	Widget.init(self, attrs, <div prop-taskList={taskList} className="task-list">
 		<div className="field has-addons">
 			<div className="control">{newTaskTitleInput}</div>
 			<div className="control">
@@ -38,7 +38,7 @@ function init(t, attrs) {
 		<div>{tasksElement}</div>
 	</div>);
 
-	t.connectDisconnect("destroyed",
+	self.connectDisconnect("destroyed",
 		taskList.connect("task-created", (taskList, task) => {
 			var taskTitleElement = <span on-click={renameTask}>{task.title}</span>;
 			var taskElement = <tr prop-task={task} className="task">
@@ -66,6 +66,6 @@ function init(t, attrs) {
 	);
 }
 
-function destroy(t) {
-	t.emit("destroyed");
+function destroy(self) {
+	self.emit("destroyed");
 }

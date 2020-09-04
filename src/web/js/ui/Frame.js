@@ -1,35 +1,34 @@
-import * as _Widget from "ui/Widget";
-import * as _Container from "ui/Container";
+import * as Widget from "ui/Widget";
 
-export const T = _class(init, _Widget.T, {
+export const T = _class(init, Widget.T, {
 	resize: resize,
 	addChild: addChild
 })
 
-function init(t, attrs) {
-	t.titleHeight = attrs.titleHeight;
-	t.margin = attrs.margin;
-	t.borderWidth = attrs.borderWidth;
-	t.padding = attrs.padding;
+function init(self, attrs) {
+	self.titleHeight = attrs.titleHeight || 20;
+	self.margin = attrs.margin || 0;
+	self.borderWidth = attrs.borderWidth || 0;
+	self.padding = attrs.padding || 0;
 	var titleElement = <div className="title">{attrs.title}</div>;
 	var element = <div className="frame">{titleElement}</div>;
-	_Widget.init(t, {}, element)
+	Widget.init(self, {}, element)
 	var titleStyle = titleElement.style
-	titleStyle.height = t.titleHeight + "px"
-	titleStyle.marginTop = titleStyle.marginLeft = titleStyle.marginRight = t.margin + "px"
+	titleStyle.height = self.titleHeight + "px"
+	titleStyle.marginTop = titleStyle.marginLeft = titleStyle.marginRight = self.margin + "px"
 }
 
-function resize(t, Width, Height) {
-	t.child.position(t.padding, t.padding, Width - 2 * (t.margin + t.borderWidth + t.padding), Height - 2 * (t.margin + t.borderWidth + t.padding) - t.titleHeight)
+function resize(self, width, height) {
+	self.child.position(self.padding, self.padding, width - 2 * (self.margin + self.borderWidth + self.padding), height - 2 * (self.margin + self.borderWidth + self.padding) - self.titleHeight)
 }
 
-function addChild(t, child) {
-	t.child = child
+function addChild(self, child) {
+	self.child = child
 	var childElement = <div className="child" style="position:relative;">{child.element}</div>
-	t.element.appendChild(childElement)
+	self.element.appendChild(childElement)
 	var childStyle = childElement.style
-	childStyle.left = childStyle.right = childStyle.bottom = t.margin + "px"
-	childStyle.top = t.margin + t.titleHeight + "px"
-	childStyle.borderLeftWidth = childStyle.borderRightWidth = childStyle.borderBottomWidth = t.borderWidth + "px"
-	child.parent = t
+	childStyle.left = childStyle.right = childStyle.bottom = self.margin + "px"
+	childStyle.top = self.margin + self.titleHeight + "px"
+	childStyle.borderLeftWidth = childStyle.borderRightWidth = childStyle.borderBottomWidth = self.borderWidth + "px"
+	child.parent = self
 }

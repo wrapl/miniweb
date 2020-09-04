@@ -1,22 +1,22 @@
-import * as _TaskList from 'demo/TaskList';
-import * as _TaskListView from 'demo/TaskListView';
+import * as TaskList from 'demo/TaskList';
+import * as TaskListView from 'demo/TaskListView';
 import { langs } from 'lang';
 import { setLocale } from 'lib/L20n';
 import { isoLangs } from 'ISOCodes';
-import * as _Container from 'ui/Container';
-import * as _HPaned from 'ui/HPaned';
-import * as _VPaned from 'ui/VPaned';
-import * as _Frame from 'ui/Frame';
+import * as HPaned from 'ui/HPaned';
+import * as VPaned from 'ui/VPaned';
+import * as Frame from 'ui/Frame';
+import * as Grid from 'ui/Grid';
 
 export const T = _class(init, null, {
 });
 
 const changeLocale = propCall('locale', setLocale);
 
-export function init(t, defaultView) {
-	window.app = t;
+export function init(self, defaultView) {
+	window.app = self;
 
-	var taskList = new _TaskList.T();
+	var taskList = new TaskList.T();
 	var langElements = langs.map(lang => {
 		var iso = lang.split("_")[0]
 		var country = lang.split("_")[1].toLowerCase()
@@ -28,17 +28,22 @@ export function init(t, defaultView) {
 		<div>{langElements}</div>
 	);*/
 
-	let container = <_HPaned.T>
-		<_VPaned.T>
-			<_TaskListView.T taskList={taskList}/>
-			<_Frame.T title="Task List" titleHeight={20}>
-				<_TaskListView.T taskList={taskList}/>
-			</_Frame.T>
-			<_TaskListView.T taskList={taskList}/>
-		</_VPaned.T>
-		<_TaskListView.T taskList={taskList}/>
-		<_TaskListView.T taskList={taskList}/>
-	</_HPaned.T>;
+	let container = <HPaned.T>
+		<VPaned.T>
+			<TaskListView.T taskList={taskList}/>
+			<Frame.T title="Task List" titleHeight={20}>
+				<Grid.T>
+					<TaskListView.T taskList={taskList} position={[0, 1, 0, 1]}/>
+					<TaskListView.T taskList={taskList} position={[1, 1, 1, 1]}/>
+					<TaskListView.T taskList={taskList} position={[0, 0, 0, 0]}/>
+					<TaskListView.T taskList={taskList} position={[1, 0, 1, 0]}/>
+				</Grid.T>
+			</Frame.T>
+			<TaskListView.T taskList={taskList}/>
+		</VPaned.T>
+		<TaskListView.T taskList={taskList}/>
+		<TaskListView.T taskList={taskList}/>
+	</HPaned.T>;
 
 	document.body.replaceChildren(container.element);
 	container.position(0, 0, window.innerWidth, window.innerHeight);

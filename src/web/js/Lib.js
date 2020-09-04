@@ -216,14 +216,7 @@ function create(tag, attrs) {
 		}
 	} else {
 		element = new tag(attrs);
-		for (var i = 0; i < children.length; ++i) {
-			let child = children[i];
-			if (child instanceof _Widget.T) {
-				element.addChild(child);
-			} else {
-				element.addChild(new _Widget.T({}, child));
-			}
-		}
+		children.forEach(child => element.addChild(child));
 	}
 	return element;
 }

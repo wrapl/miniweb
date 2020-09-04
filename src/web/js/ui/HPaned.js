@@ -1,43 +1,43 @@
-import * as _Widget from "ui/Widget";
-import * as _Container from "ui/Container";
+import * as Widget from "ui/Widget";
+import * as Container from "ui/Container";
 
 var sliderWidth = 7;
 
-export const T = _class(init, _Container.T, {
+export const T = _class(init, Container.T, {
 	resize: resize,
 	addChild: addChild,
 	removeChild: removeChild,
 	getDimension: getDimension
 });
 
-function init(t) {
-	_Container.init(t)
-	t.colVars = []
-	t.widthConstraint = t.solver.constrain(t.widthVar, true)
-	t.sliders = []
-	t.orderedChildren = []
+function init(self, attrs) {
+	Container.init(self, attrs);
+	self.colVars = [];
+	self.widthConstraint = self.solver.constrain(self.widthVar, true);
+	self.sliders = [];
+	self.orderedChildren = [];
 }
 
-function addChild(t, widget) {
-	var child = _Container.addChild(t, widget)
-	var solver = t.solver
-	var colVars = t.colVars
-	var heightVar = t.heightVar
-	var widthVar = t.widthVar
-	var orderedChildren = t.orderedChildren
-	var solver = t.solver
-	t.solver.unconstrain(t.widthConstraint)
+function addChild(self, widget) {
+	var child = Container.addChild(self, widget)
+	var solver = self.solver
+	var colVars = self.colVars
+	var heightVar = self.heightVar
+	var widthVar = self.widthVar
+	var orderedChildren = self.orderedChildren
+	var solver = self.solver
+	self.solver.unconstrain(self.widthConstraint)
 	var v = solver.variable("Col", 0)
 	colVars.push(v)
 	var expression = widthVar
 	for (var i = 0; i < colVars.length; ++i) expression = expression.sub(colVars[i])
-	t.widthConstraint = solver.constrain(expression.sub(sliderWidth * (colVars.length - 1)), true)
-	child.index = t.orderedChildren.length
+	self.widthConstraint = solver.constrain(expression.sub(sliderWidth * (colVars.length - 1)), true)
+	child.index = self.orderedChildren.length
 	orderedChildren.push(widget)
 	if (child.index > 0) {
-		var sliders = t.sliders
+		var sliders = self.sliders
 		var slider = <div className="paned-slider vertical" style="width:7px;"><div/></div>;
-		t.element.appendChild(slider)
+		self.element.appendChild(slider)
 		sliders.push(slider)
 		if (window.orientation) {
 			slider.appendChild(<span className="hint"/>);
@@ -112,11 +112,11 @@ function addChild(t, widget) {
 	return slider
 }
 
-function removeChild(t, widget) {
-	var child = t.children[widget.id]
-	child.index = t.orderedChildren.indexOf(widget)
-	var sliders = t.sliders, slider = null
-	if (child.index == 0 & t.sliders > 0) {
+function removeChild(self, widget) {
+	var child = self.children[widget.id]
+	child.index = self.orderedChildren.indexOf(widget)
+	var sliders = self.sliders, slider = null
+	if (child.index == 0 & self.sliders > 0) {
 		slider = sliders.splice(0, 1)[0]
 	} else if (child.index > 0) {
 		slider = sliders.splice(child.index - 1, 1)[0]
@@ -124,29 +124,29 @@ function removeChild(t, widget) {
 	if (slider != null & slider.parentNode != null) {
 		slider.parentNode.removeChild(slider)
 	}
-	var v = t.colVars.splice(child.index, 1)[0]
-	t.solver.unstay(v)
-	delete t.solver.Variables[v.id]
-	t.orderedChildren.splice(child.index, 1)
-	t.solver.unconstrain(t.widthConstraint)
-	var expression = t.widthVar
-	for (var i = 0; i < t.colVars.length; ++i) expression = expression.sub(t.colVars[i])
-	t.widthConstraint = t.solver.constrain(expression.sub(sliderWidth * (t.colVars.length - 1)), true)
-	_Container.removeChild(t, widget)
+	var v = self.colVars.splice(child.index, 1)[0]
+	self.solver.unstay(v)
+	delete self.solver.Variables[v.id]
+	self.orderedChildren.splice(child.index, 1)
+	self.solver.unconstrain(self.widthConstraint)
+	var expression = self.widthVar
+	for (var i = 0; i < self.colVars.length; ++i) expression = expression.sub(self.colVars[i])
+	self.widthConstraint = self.solver.constrain(expression.sub(sliderWidth * (self.colVars.length - 1)), true)
+	Container.removeChild(self, widget)
 }
 
-function getDimension(t, child, dimension, expr) {
-	var children = t.children
-	var solver = t.solver
-	var colVars = t.colVars
-	var widthVar = t.widthVar
-	var heightVar = t.heightVar
+function getDimension(self, child, dimension, expr) {
+	var children = self.children
+	var solver = self.solver
+	var colVars = self.colVars
+	var widthVar = self.widthVar
+	var heightVar = self.heightVar
 	var expression = solver.constant(0)
 	switch (dimension) {
 	case "width":
 		expression = expression.add(colVars[child.index])
 		for (var i = 0; i < expr.length; i += 2) {
-			if (expr[i] instanceof _Widget.T) {
+			if (expr[i] instanceof Widget.T) {
 				var child2 = children[expr[i].id]
 				var coeff = expr[i + 1]
 				expression = expression.sub(colVars[child2.index].mul(coeff))
@@ -180,12 +180,12 @@ function getDimension(t, child, dimension, expr) {
 	return expression
 }
 
-export function resize(t, width, height) {
-	t.defaultSize()
-	var solver = t.solver
-	var widthVar = t.widthVar
-	var heightVar = t.heightVar
-	var colVars = t.colVars
+export function resize(self, width, height) {
+	self.defaultSize()
+	var solver = self.solver
+	var widthVar = self.widthVar
+	var heightVar = self.heightVar
+	var colVars = self.colVars
 
 	for (var i = 0; i < colVars.length; ++i) solver.stay(colVars[i], 1)
 	solver.suggest(widthVar, width)
@@ -193,8 +193,8 @@ export function resize(t, width, height) {
 	solver.resolve()
 	solver.clear()
 	
-	var orderedChildren = t.orderedChildren
-	var sliders = t.sliders
+	var orderedChildren = self.orderedChildren
+	var sliders = self.sliders
 	
 	var x = 0
 	var width = colVars[0].value
@@ -209,8 +209,8 @@ export function resize(t, width, height) {
 		x += width
 	}
 	
-	t.element.style.width = x + "px"
-	t.element.style.height = heightVar.value + "px"
+	self.element.style.width = x + "px"
+	self.element.style.height = heightVar.value + "px"
 	
-	_Widget.resize(t, width, height)
+	Widget.resize(self, width, height)
 }

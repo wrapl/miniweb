@@ -1,7 +1,6 @@
-import * as _Widget from "ui/widget";
-import * as _Container from "ui/Container";
+import * as Container from "ui/Container";
 
-export const T = _class(init, _Container.T, {
+export const T = _class(init, Container.T, {
 	resize: resize,
 	addChild: addChild,
 	removeChild: removeChild,
@@ -9,37 +8,38 @@ export const T = _class(init, _Container.T, {
 	showChild: showChild
 })
 
-export function init(t, attrs, element) {
-	_Container.init(t, attrs, element)
-	t.visibleChild = null
+export function init(self, attrs, element) {
+	Container.init(self, attrs, element)
+	self.visibleChild = null
 }
 
-function addChild(t, widget, alwaysResize) {
-	var child = _Container.addChild(t, widget)
+function addChild(self, widget, alwaysResize) {
+	if (alwaysResize === undefined) alwaysResize = widget.alwaysResize
+	var child = Container.addChild(self, widget)
 	child.display = widget.element.style.display
 	//widget.HtmlElement.style.display = "none"
 	widget.hide()
-	if (t.visibleChild === null) showChild(t, widget)
+	if (self.visibleChild === null) showChild(self, widget)
 	if (widget.alwaysResize) {
 		child.alwaysResize = true
-		widget.position(0, 0, t.size.width, t.size.height)
+		widget.position(0, 0, self.size.width, self.size.height)
 	}
 }
 
-function removeChild(t, widget) {
-	var child = t.children[widget.id]
-	if (child === t.visibleChild) t.visibleChild = null
-	_Container.removeChild(t, widget)
-	if (t.visibleChild === null) for (var id in t.children) {
-		showChild(t.children[id])
+function removeChild(self, widget) {
+	var child = self.children[widget.id]
+	if (child === self.visibleChild) self.visibleChild = null
+	Container.removeChild(self, widget)
+	if (self.visibleChild === null) for (var id in self.children) {
+		showChild(self.children[id])
 		break
 	}
 }
 
-function getDimension(t, _, dimension, expr) {
-	var solver = t.solver
-	var widthVar = t.widthVar
-	var heightVar = t.heightVar
+function getDimension(self, _, dimension, expr) {
+	var solver = self.solver
+	var widthVar = self.widthVar
+	var heightVar = self.heightVar
 	var expression = solver.constant(0)
 	switch (dimension) {
 	case "width":
@@ -58,43 +58,43 @@ function getDimension(t, _, dimension, expr) {
 	return expression
 }
 
-export function resize(t, width, height) {
-	t.defaultSize()
+export function resize(self, width, height) {
+	self.defaultSize()
 	
-	var solver = t.solver
-	var widthVar = t.widthVar
-	var heightVar = t.heightVar
+	var solver = self.solver
+	var widthVar = self.widthVar
+	var heightVar = self.heightVar
 
 	solver.suggest(widthVar, width)
 	solver.suggest(heightVar, height)
 	solver.resolve()
 	solver.clear()
 	
-	if (t.visibleChild) t.visibleChild.widget.position(0, 0, widthVar.value, heightVar.value)
-	for (var childId in t.children) {
-		var child = t.children[childId]
+	if (self.visibleChild) self.visibleChild.widget.position(0, 0, widthVar.value, heightVar.value)
+	for (var childId in self.children) {
+		var child = self.children[childId]
 		if (child.alwaysResize) child.widget.position(0, 0, widthVar.value, heightVar.value)
 	}
 	
-	t.element.style.width = widthVar.value + "px"
-	t.element.style.height = heightVar.value + "px"	
+	self.element.style.width = widthVar.value + "px"
+	self.element.style.height = heightVar.value + "px"	
 	
-	widget.resize(t, width, height)
+	widget.resize(self, width, height)
 }
 
-function showChild(t, widget) {
-	var child = t.children[widget.id]
-	if (t.visibleChild === child) return
-	if (t.visibleChild) {
-		t.visibleChild.widget.hide()
+function showChild(self, widget) {
+	var child = self.children[widget.id]
+	if (self.visibleChild === child) return
+	if (self.visibleChild) {
+		self.visibleChild.widget.hide()
 	}
-	if (t.visibleChild = child) {
-		t.visibleChild.widget.show()
-		if (t.size.width && t.size.height) t.visibleChild.widget.position(0, 0, t.widthVar.value, t.heightVar.value)
+	if (self.visibleChild = child) {
+		self.visibleChild.widget.show()
+		if (self.size.width && self.size.height) self.visibleChild.widget.position(0, 0, self.widthVar.value, self.heightVar.value)
 	}
 }
 
-function alwaysResize(t, widget, alwaysResize) {
-	var child = t.children[widget.id]
+function alwaysResize(self, widget, alwaysResize) {
+	var child = self.children[widget.id]
 	child.alwaysResize = alwaysResize
 }

@@ -1,4 +1,4 @@
-import * as _Class from "lib/Class";
+import "lib/Class";
 
 export const T = _class(init, null, {
 	appendChild: appendChild,
@@ -14,38 +14,38 @@ export const T = _class(init, null, {
 	computeSize: computeSize
 });
 
-export function init(t, attrs, element) {
-	t.parent = null;
-	t.id = newId();
-	t.size = {width: 0, height: 0};
-	t.border = {top: 0, bottom: 0, left: 0, right: 0};
-	t.minSize = null;
+export function init(self, attrs, element) {
+	self.parent = null;
+	self.id = newId();
+	self.size = {width: 0, height: 0};
+	self.border = {top: 0, bottom: 0, left: 0, right: 0};
+	self.minSize = null;
 	if (!element) element = <div/>;
-	element.id = t.id;
+	element.id = self.id;
 	element.style.position = "absolute";
 	element.style.top = "0";
 	element.style.left = "0";
-	t.element = element;
+	self.element = element;
 	if (attrs) for (var attr in attrs) {
 		if (attr.startsWith("on-")) {
-			t.connect(attr.substring(3), attrs[attr]);
+			self.connect(attr.substring(3), attrs[attr]);
 			delete attrs[attr];
 		}
 	}
-	t.attrs = attrs;
+	self.attrs = attrs;
 }
 
-function appendChild(t, child) {
-	t.element.appendChild(child);
+function appendChild(self, child) {
+	self.element.appendChild(child);
 }
 
-function appendChildren(t) {
-	t.element.appendChildren(Array.prototype.slice.call(arguments, 1));
+function appendChildren(self) {
+	self.element.appendChildren(Array.prototype.slice.call(arguments, 1));
 }
 
-function position(t, x, y, width, height) {
-	let element = t.element;
-	let border = t.border;
+function position(self, x, y, width, height) {
+	let element = self.element;
+	let border = self.border;
 	x += border.left;
 	y += border.top;
 	element.style.left = x + "px";
@@ -54,41 +54,41 @@ function position(t, x, y, width, height) {
 	height -= (border.top + border.bottom);
 	element.style.width = width + "px";
 	element.style.height = height + "px";
-	t.size = {x: x, y: y, width: width, height: height};
-	t.resize(width, height);
+	self.size = {x: x, y: y, width: width, height: height};
+	self.resize(width, height);
 }
 
-export function resize(t, width, height) {
-	t.emit("resize", width, height);
+export function resize(self, width, height) {
+	self.emit("resize", width, height);
 }
 
-function hide(t) {
-	t.element.style.display = "none";
+function hide(self) {
+	self.element.style.display = "none";
 }
 
-function show(t) {
-	t.element.style.display = "";
+function show(self) {
+	self.element.style.display = "";
 }
 
-function addConstraint(t, rule, expr, strength) {
-	if (!t.parent) return null;
-	return t.parent.addChildConstraint(t, rule, expr, strength);
+function addConstraint(self, rule, expr, strength) {
+	if (!self.parent) return null;
+	return self.parent.addChildConstraint(self, rule, expr, strength);
 }
 
-function addSuggestion(t, rule, expr, strength) {
-	if (!t.parent) return null;
-	return t.parent.addChildSuggestion(t, rule, expr, strength);
+function addSuggestion(self, rule, expr, strength) {
+	if (!self.parent) return null;
+	return self.parent.addChildSuggestion(self, rule, expr, strength);
 }
 
-function removeConstraint(t, constraint) {
-	if (!t.parent) return;
-	t.parent.removeChildConstraint(t, constraint);
+function removeConstraint(self, constraint) {
+	if (!self.parent) return;
+	self.parent.removeChildConstraint(self, constraint);
 }
 
-function defaultSize(t) {
-	return t.defaultSize_ || (t.defaultSize_ = t.computeSize());
+function defaultSize(self) {
+	return self.defaultSize_ || (self.defaultSize_ = self.computeSize());
 }
 
-function computeSize(t) {
+function computeSize(self) {
 	return {}
 }
