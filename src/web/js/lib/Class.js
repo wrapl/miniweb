@@ -1,4 +1,4 @@
-function _class(constructor, parent, methods) {
+function _class(parent, constructor, methods) {
 	function _classMethod(methods, method) {
 		var actual = methods[method];
 		return function() {
@@ -20,7 +20,7 @@ function _class(constructor, parent, methods) {
 
 window._class = _class;
 
-const Base = _class(baseInit, Object, {
+const Base = _class(Object, baseInit, {
 	connect: baseConnect,
 	connectBefore: baseConnectBefore,
 	disconnectAll: baseDisconnectAll,
@@ -230,7 +230,7 @@ function disconnectArray(connections) {
 	connections.forEach(connection => connection.disconnect());
 }
 
-const ConnectionT = _class(connectionInit, null, {
+const ConnectionT = _class(null, connectionInit, {
 	setOnce: connectionSetOnce
 });
 
@@ -242,7 +242,7 @@ function connectionSetOnce(connection) {
 	return connection;
 }
 
-const EventConnectionT = _class(eventConnectionInit, ConnectionT, {
+const EventConnectionT = _class(ConnectionT, eventConnectionInit, {
 	disconnect: eventConnectionDisconnect
 });
 
@@ -264,7 +264,7 @@ function eventConnectionDisconnect(connection) {
 	delete object.eventSystem;
 }
 
-const PropertyConnectionT = _class(propertyConnectionInit, ConnectionT, {
+const PropertyConnectionT = _class(ConnectionT, propertyConnectionInit, {
 	disconnect: propertyConnectionDisconnect
 });
 
@@ -289,7 +289,7 @@ function propertyConnectionDisconnect(connection) {
 	delete object.propertySystem;
 }
 
-const IntervalConnectionT = _class(intervalConnectionInit, ConnectionT, {
+const IntervalConnectionT = _class(ConnectionT, intervalConnectionInit, {
 	disconnect: intervalConnectionDisconnect
 });
 

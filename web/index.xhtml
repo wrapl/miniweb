@@ -6,10 +6,13 @@
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-	<link rel="stylesheet" href="css/bulma.css"/>
 	<link rel="stylesheet" href="css/app.css"/>
+	<link rel="stylesheet" href="css/ui-elements.css"/>
+	<link rel="stylesheet" href="css/toolbar.css"/>
+	<link rel="stylesheet" href="css/widgets.css"/>
 	<link rel="stylesheet" href="css/fa-solid.css"/>
 	<link rel="stylesheet" href="css/fontawesome.css"/>
+	<link rel="stylesheet" href="css/flag-icon.css"/>
 	<title>App</title>
 	<script src="js/moment.min.js"/>
 	<script src="js/papaparse.min.js"/>
@@ -18,9 +21,9 @@
 <body>
 	<script>
 		require.config({baseUrl: 'js'});
-		require(['Lib'], function(_Lib) {
-			require(['Demo'], function(_Demo) {
-				_Demo.start();
+		require(['Lib'], function(Lib) {
+			require(['Demo'], function(Demo) {
+				new Demo.T();
 			});
 		});
 	</script>

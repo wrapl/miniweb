@@ -1,0 +1,580 @@
+.button {
+	font-family: Interface;
+	position: relative;
+	cursor: default;
+}
+
+input[type="text"], input[type="email"], textarea {
+	font-family: Content;
+}
+
+/*input[type="email"]:invalid {
+	outline: 1px solid red;
+}
+
+input[type="email"]:valid {
+	outline: 1px solid green;
+}*/
+
+.switch-label {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+	/*border: 2px solid white;*/
+	border-radius: 2px;
+	
+	/*background-color: #faa732;
+	background: linear-gradient(to bottom, #fbb450, #f89406);*/
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);	
+}
+
+.switch-checkbox {
+	display: none;
+}
+
+.switch-value {
+	width: 200%;
+	margin-left: -100%;
+	-moz-transition: margin 0.3s ease-in 0s;
+	transition: margin 0.3s ease-in 0s;
+	display: block;
+}
+
+.switch-value:before, .switch-value:after {
+	float: left;
+	width: 50%;
+	/*height: 30px;*/
+	padding: 0;
+	/*line-height: 30px;*/
+	color: white;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.switch-value:before {
+	content: "ON";
+	padding-left: 10px;
+	background-color: transparent;
+	color: hsla(232, 57%, 50%, 0.9);
+	text-align: left;
+}
+
+.switch-value:after {
+	content: "OFF";
+	padding-right: 10px;
+	background-color: transparent;
+	color: hsla(232, 57%, 50%, 0.9);
+	text-align: right;
+}
+
+.switch-hidden {
+	width: 30%;
+	margin: 1px;
+	/*background: hsl(0, 0%, 65%);
+	border: 1px solid hsl(0, 0%, 65%);*/
+	
+	background-color: #faa732;
+	background: linear-gradient(to bottom, #fbb450, #f89406);
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);	
+	
+	border-radius: 5px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	right: 60%;
+	left: 0px;
+	-moz-transition: all 0.3s ease-in 0s;
+	transition: all 0.3s ease-in 0s;
+}
+
+.switch-value.on {
+	margin-left: 0;
+}
+
+.switch-hidden.on {
+	right: 0px;
+	left: 60%;
+}
+
+/******************************************************************************************/
+
+.plastic.button-box {
+	clear: both;
+	text-align: center;
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.plastic.link-box {
+	clear: both;
+	text-align: center;
+	display: block;
+	font-size: 90%;
+}
+
+.plastic.button {
+	min-width: 100px;
+	width: auto;
+	display: inline-block;
+	text-align: center;
+	cursor: default;
+	font-size: 90%;
+	padding: 2px;
+	color: #fefbec;
+	background-color: #d73737;
+	border-radius: 3px;
+}
+
+.plastic.button:hover {
+	background-color: #E07C7C;
+}
+
+.plastic.button:active {
+}
+
+.plastic.button.disabled {
+	border: none;
+	margin: 1px;
+	box-shadow: inset 0 0 100px rgb(64, 64, 64);
+}
+
+.plastic.button.hidden {
+	display: none;
+}
+
+.plastic.button.subdue {
+	background-color: #a6a28c;
+}
+
+.plastic.button.subdue:hover {
+	background-color: #e8e4cf;
+}
+
+/*.plastic.button.call-to-action {
+	background-color: transparent;
+	background-image: linear-gradient(to bottom, rgb(144, 194, 246), rgb(92, 163, 204));
+}*/
+
+.plastic.button + .button {
+	margin-left: 10px;
+}
+
+.plastic.button.small {
+	min-width: 0px;
+}
+
+.plastic.button.big {
+	display: block;
+	font-size: 100%;
+}
+
+.plastic.alert {
+	display: table;
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid currentcolor;
+	text-align: center;
+	font-family: Content;
+	font-size: 80%;
+	padding: 2px;
+	margin: 5px 0;
+	white-space: normal;
+}
+
+.plastic.alert .dismiss {
+	float: right;
+	margin: 0 2px;
+}
+
+.plastic.alert.error {
+	background-color: rgb(255, 178, 169);
+	color: rgb(163, 15, 0);
+}
+
+.plastic.table .plastic.row-label {
+	vertical-align: middle;
+	width: 1px;
+	padding-right: 5px;
+	white-space: nowrap;
+}
+
+input.plastic, form.plastic input {
+	position: relative;
+}
+
+label.plastic, form.plastic label {
+	vertical-align: 5px;
+}
+
+input.plastic.error {
+	border: 1px solid red;
+	box-shadow: 0px 2px rgb(255,0,0)
+}
+
+.plastic.error-box {
+	display: block;
+	position: absolute;
+	background-color: rgb(192, 0, 0);
+	color: white;
+	/*text-shadow: 1px 1px black;*/
+	font-family: Interface;
+	font-size: 14px;
+	padding: 1px 4px 3px 0px;
+	height: 16px;
+}
+
+.plastic.error-box:before {
+	position: absolute;
+	border-style: solid;
+	border-width: 10px 16px 10px 0;
+	border-color: transparent rgb(192, 0, 0) transparent transparent;
+	content: "";
+	font-size: 0px;
+	left: -16px;
+	top: 0;
+}
+
+.plastic.link {
+	text-decoration: underline;
+	color: rgb(255, 204, 0);
+	font-family: Content;
+	cursor: pointer;
+}
+
+select.plastic {
+	border: none;
+	border-radius: 3px;
+	background-color: #cfb017;
+	color: rgb(51,51,51);
+	font-family: Interface;
+}
+
+select.plastic option {
+	background-color: rgb(250, 167, 50);
+	color: rgb(51,51,51);
+	font-family: Interface;
+}
+
+.plastic.message {
+	text-align: center;
+	font-style: italic;
+}
+
+
+textarea.plastic, input[type="text"].plastic, input[type="email"].plastic, input[type="password"].plastic {
+	border: 1px solid rgb(51,51,51);
+	padding: 3px 5px 3px 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	background-color: white;
+}
+
+textarea.plastic:focus, input[type="text"].plastic:focus, input[type="email"].plastic:focus, input[type="password"].plastic:focus {
+	/*border: 1px solid blue;*/
+	border: 1px solid rgb(80,130,255);
+	outline: none;
+	background-color: white;
+	/*box-shadow: inset 0px 0px 2px blue;*/
+}
+
+.plastic.button.social-login.disabled {
+}
+
+.plastic.button.social-login.email {
+	background: linear-gradient(to bottom, #4a7224, #2e4a06);
+	color: #DDDDDD;
+}
+
+.plastic.button.social-login.googleplus {
+	background: linear-gradient(to bottom, #DD4B39, #9E3327);
+	color: #DDDDDD;
+}
+
+.plastic.button.social-login.facebook {
+	background: linear-gradient(to bottom, #3B5998, #233A68);
+	color: #DDDDDD;
+}
+
+.plastic.button.social-login i {
+	padding: 2px 5px 2px 3px;
+	border-right: 1px solid grey;
+	float: left;
+	width: 15px;
+}
+
+/******************************************************************************************/
+
+.glass.button-box {
+	float: right;
+	display: inline-block;
+}
+
+.glass.button {
+	min-width: 20px;
+	width: auto;
+	display: inline-block;
+	text-align: center;
+	cursor: default;
+	font-size: 90%;
+	padding: 1px 3px;
+	/*color: rgb(32,32,32);
+	background: none;*/
+	color: hsl(0, 0%, 80%);
+	background-color: #b854d4;
+	color: white;
+	text-decoration: none;
+	border: none;
+	border-radius: 2px;
+}
+
+.glass.button:hover {
+	/*background-color: rgb(32,32,32);
+	color: rgb(224,224,224);
+	background-color: #b65611;*/
+	box-shadow: 0px 0px 5px rgb(0, 0, 0);
+}
+
+.glass.button:active {
+	background-color: rgb(32,32,32);
+	color: rgb(224,224,224);
+}
+
+.glass.button.disabled {
+	color: black;
+	border: 1px solid black;
+}
+
+.glass.button.hidden {
+	display: none;
+}
+
+.glass.button + .button {
+	margin-left: 4px;
+}
+
+/******************************************************************************************/
+
+.flat-button {
+	display: inline-block;
+	/*background-color: rgb( 230, 176,161);
+	margin: 0 2px;*/
+	width: 75px;
+	height: 75px;
+	font-size: 12px;
+	vertical-align: top;
+	text-align: center;
+}
+
+.flat-button .image {
+	font-size: 45px;
+	/*color: rgba(55, 75, 200, 0.59);*/
+	color: rgb(96,96,170);
+	position: relative;
+}
+
+.flat-button .icon {
+	font-size: 45px;
+	color: rgba(36, 36, 36, 0.6);
+	position: relative;
+}
+
+.flat-button .icon-stack {
+	font-size: 23px;
+	color: rgba(55, 75, 200, 0.59);
+}
+
+.flat-button .emblem {
+	position: absolute;
+	font-size: 50%;
+	bottom: 0px;
+	right: -5px;
+}
+
+.flat-button .title {
+	white-space: normal;
+	word-wrap: break-word;
+	display: block;
+}
+
+/******************************************************************************************/
+
+.notification {
+	position: absolute;
+	right: 25px;
+	width: 200px;
+	display: block;
+	/*border: 1px solid black;
+	background-color: gray;*/
+	transition: all 0.35s ease-in;
+	-webkit-transition: all 0.35s ease-in;
+	-moz-transition: all 0.35s ease-in;
+	border-radius: 2px;
+	padding: 5px;
+	font-family: Content;
+	font-size: 90%;
+	/*color: hsl(0, 0%, 15%);
+	border: 1px solid silver;
+	z-index: 9999;
+	background: linear-gradient(to bottom, hsl(0, 0%, 93%) 0%, hsl(0, 0%, 83%) 100%);*/
+	color: hsl(0, 0%, 15%);
+	border: 1px solid hsl(49, 91%, 52%);
+	z-index: 9999;
+	background: linear-gradient(to bottom, hsl(49, 100%, 66%) 0%, hsl(49, 100%, 54%) 100%);
+	text-shadow: 1px 1px 1px hsl(0, 0%, 70%);
+}
+
+.notification .action .avatar {
+	float: left;
+	height: 32px;
+	width: 32px;
+	margin-right: 2px;
+	border: 1px solid gray;
+	border-radius: 2px;
+}
+
+.notification > i:first-child {
+	float: left;
+	font-size: 32px;
+	margin-right: 2px;
+}
+
+.notification .action .username {
+	color: hsl(200, 100%, 38%);
+}
+
+/******************************************************************************************/
+
+.floating-entry {
+	position: relative;
+}
+
+.floating-entry input[type="text"] {
+	z-index: 2;
+	position: absolute;
+	left: 5px;
+	right: 5px;
+	top: 2px;
+	border: none;
+	font-family: Content;
+	background-color: transparent;
+}
+
+.floating-entry input[type="text"]:focus {
+	outline: none;
+	border: none;
+	background-color: transparent;
+}
+
+.floating-entry .container {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: -2px;
+	bottom: -20px;
+	z-index: 1;
+	border: 1px dashed rgba(0,0,0,0.5);
+}
+
+.floating-entry .container .buttons {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 2px;
+	white-space: nowrap;
+}
+
+.floating-entry .container .buttons .button {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+.ref {
+	text-decoration: underline;
+	color: #0080C0;
+}
+
+.link.url {
+	text-decoration: underline;
+	color: #C08000;
+	display: inline-block;
+}
+
+.link.url:after {
+	content: " \f14c";
+	font-family: FontAwesome;
+	color: #C08000;
+	vertical-align: baseline;
+	letter-spacing: 0px;
+}
+
+.aspect-container {
+	position: relative;
+}
+
+.aspect-container > * {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+}
+
+.aspect-container .aspect-spacer {
+	position: static;
+}
+
+/******************************************************************************************/
+
+@keyframes bottom-bar-appear {
+	from { bottom: -35px; }
+	to { bottom: 5px; }
+}
+
+@-webkit-keyframes bottom-bar-appear {
+	from { bottom: -35px; }
+	to { bottom: 5px; }
+}
+
+.bottom-bar {
+	animation-duration: 0.35s;
+	animation-name: bottom-bar-appear;
+	-webkit-animation-duration: 0.35s;
+	-webkit-animation-name: bottom-bar-appear;
+	transition: bottom 0.35s;
+	-moz-transition: bottom 0.35s;
+	-webkit-transition: bottom 0.35s;
+	position: absolute;
+	z-index: 2000;
+	left: 20%;
+	right: 20%;
+	height: 30px;
+	bottom: 5px;
+	background-color: lightgray;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid grey;
+}
+
+.bottom-bar .contents {
+	display: inline-block;
+	margin-top: 4px;
+}
+
+.bottom-bar .contents label {
+	margin: 2px 10px;
+}
+
+.bottom-bar .close-button {
+	float: right;
+	color: grey;
+	font-size: 20px;
+	margin: 3px 7px;
+	text-shadow: 1px 1px 1px white;
+}

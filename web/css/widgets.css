@@ -1,0 +1,65 @@
+/******************************************************************************************/
+
+.frame {
+	border: 1px solid gray;
+	/*border-radius: 3px;*/
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	overflow: hidden;
+}
+
+.frame > .title {
+	text-align: center;
+	background: #d43552;
+	text-shadow: 1px 1px 1px black;
+	color: white;
+}
+
+.frame > .child {
+	/*border-style: solid;
+	border-color: rgb(58,62,82);*/
+	background-color: #f0f0f0;
+	position: absolute;
+}
+
+/******************************************************************************************/
+
+.wysiwyg {
+	position: relative;
+	border: 1px solid black;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+}
+
+.wysiwyg > .toolbar.small {
+	width: 100%;
+}
+
+.wysiwyg > .editable {
+	position: absolute;
+	top: 22px;
+	left: 1px;
+	right: 1px;
+	bottom: 1px;
+	background-color: white;
+	color: black;
+	padding: 2px;
+	overflow: auto;
+	font-family: Content;
+}
+
+.wysiwyg > .editable:focus {
+	outline: none;
+/*	border: 1px solid blue;*/
+}
+
+.wysiwyg .video-placeholder {
+	display: inline-block;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border: 1px solid black;
+	background-color: #00C0FF;
+}
+

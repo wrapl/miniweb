@@ -5,7 +5,7 @@ var CurrentWidget = null
 export const TARGET_SAME_WIDGET = 1
 export const TARGET_OTHER_WIDGET = 2
 
-var drag_context_t = _class(drag_context_init)
+var drag_context_t = _class(null, drag_context_init)
 
 function drag_context_init(DragContext) {
 	DragContext.Timestamp = (new Date()).getTime()

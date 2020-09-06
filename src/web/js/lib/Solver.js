@@ -1,4 +1,4 @@
-var ExprT = _class(exprInit, null, {
+var ExprT = _class(null, exprInit, {
 	string: exprString,
 	add: exprAdd,
 	sub: exprSub,
@@ -121,8 +121,7 @@ function exprIsZero(expr) {
 	return expr.constant === 0;
 }
 
-var VarT = _class(varInit, ExprT, {
-});
+var VarT = _class(ExprT, varInit);
 
 function varInit(v, name, value) {
 	exprInit(v);
@@ -131,7 +130,7 @@ function varInit(v, name, value) {
 	v.terms[v.id] = 1;
 }
 
-export const T = _class(init, null, {
+export const T = _class(null, init, {
 	variable: variable,
 	constant: constant,
 	constrain: constrain,

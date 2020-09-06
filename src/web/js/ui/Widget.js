@@ -1,6 +1,6 @@
 import "lib/Class";
 
-export const T = _class(init, null, {
+export const T = _class(null, init, {
 	appendChild: appendChild,
 	appendChildren: appendChildren,
 	position: position,
@@ -26,7 +26,7 @@ export function init(self, attrs, element) {
 	element.style.top = "0";
 	element.style.left = "0";
 	self.element = element;
-	if (attrs) for (var attr in attrs) {
+	for (var attr in attrs) {
 		if (attr.startsWith("on-")) {
 			self.connect(attr.substring(3), attrs[attr]);
 			delete attrs[attr];

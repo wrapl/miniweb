@@ -1,7 +1,7 @@
 import * as Widget from "ui/Widget";
 import * as Solver from "lib/Solver";
 
-export const T = _class(init, Widget.T, {
+export const T = _class(Widget.T, init, {
 	computeSize: computeSize,
 	addChild: addChild,
 	removeChild: removeChild,
@@ -82,6 +82,16 @@ function removeChildConstraint(self, widget, constraint) {
 	var child = self.children[widget.id];
 	delete child.constraints[constraint];
 	self.solver.unconstrain(constraint);
+}
+
+const standardConstraints = ["width", "height"];
+
+export function addChildConstraints(self, widget) {
+	standardConstraints.forEach(name => {
+		if (widget.attrs[name]) {
+			self.addChildConstraint(widget, name, widget.attrs[name]);
+		}
+	})
 }
 
 export function addChild(self, widget) {

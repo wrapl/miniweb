@@ -1,6 +1,6 @@
 import * as Widget from "ui/Widget";
 
-export const T = _class(init, Widget.T, {
+export const T = _class(Widget.T, init, {
 	destroy: destroy
 });
 

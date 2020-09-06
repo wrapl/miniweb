@@ -3,7 +3,7 @@ import * as Container from "ui/Container";
 
 var sliderWidth = 7;
 
-export const T = _class(init, Container.T, {
+export const T = _class(Container.T, init, {
 	resize: resize,
 	addChild: addChild,
 	removeChild: removeChild,
@@ -109,7 +109,7 @@ function addChild(self, widget) {
 			}
 		}
 	}
-	return slider
+	Container.addChildConstraints(self, widget);
 }
 
 function removeChild(self, widget) {

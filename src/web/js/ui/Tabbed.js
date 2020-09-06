@@ -1,6 +1,7 @@
+import * as Widget from 'ui/Widget';
 import * as Container from "ui/Container";
 
-export const T = _class(init, Container.T, {
+export const T = _class(Container.T, init, {
 	resize: resize,
 	addChild: addChild,
 	removeChild: removeChild,
@@ -79,7 +80,7 @@ export function resize(self, width, height) {
 	self.element.style.width = widthVar.value + "px"
 	self.element.style.height = heightVar.value + "px"	
 	
-	widget.resize(self, width, height)
+	Widget.resize(self, width, height)
 }
 
 function showChild(self, widget) {

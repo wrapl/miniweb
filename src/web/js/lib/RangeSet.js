@@ -1,4 +1,4 @@
-export const T = _class(init, null, {
+export const T = _class(null, init, {
     size: size,
     min: min,
     max: max,

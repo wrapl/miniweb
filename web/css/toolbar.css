@@ -1,0 +1,549 @@
+.toolbar {
+	font-family: FontAwesome;
+	background-color: #292824;
+	color: #a6a28c;
+	text-shadow: -1px -1px 1px hsl(0, 0%, 0%);
+}
+
+.toolbar .text, .toolbar .title, .toolbar .label {
+	font-family: Content;
+}
+
+.toolbar .title {
+	padding-left: 5px;
+	display: inline-block;
+	font-size: 75%;
+	color: white;
+	text-shadow: 0px 1px 1px black;
+	font-family: Interface;
+	width: 150px;
+	vertical-align: -2px;
+	line-height: 20px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: default;
+}
+
+.toolbar .bpm-container {
+	font-size: 70%;
+	text-align: center;
+	font-family: Content;
+	line-height: 22px;
+	vertical-align: 2px;
+	padding: 1px 3px 1px 3px;
+	text-align: left;
+	border: 1px solid rgba(0,0,0,0.7);
+	border-radius: 5px;
+}
+
+.toolbar .bpm-container .bpm-value {
+}
+
+.toolbar .bpm-container .bpm-label {
+}
+
+.toolbar.main {
+	display: block;
+	width: auto;
+	height: 30px;
+	font-size: 20px;
+	margin: 0 0 0 0;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.toolbar.small {
+	display: block;
+	width: auto;
+	height: 22px;
+	font-size: 14px;
+	margin: 0 0 0 0;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.toolbar .space {
+	display: inline-block;
+	position: relative;
+	height: 100%;
+	vertical-align: top;
+}
+
+.toolbar .button-group {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 6px 0 6px;
+	padding: 0 0 0 0;
+	overflow: hidden;
+	height: 100%;
+}
+
+.toolbar .separator {
+	display: inline-block;
+	position: relative;
+	vertical-align: top;
+	height: 70%;
+	margin: 4px 6px 4px 6px;
+	width: 0px;
+	text-shadow: none;
+	box-shadow: none;
+	background-repeat: none;
+	background-image: none;
+	background-color: rgba(0, 0, 0, 0.2);
+	border-left: 1px solid hsla(0, 0%, 0%, 0.42);
+	border-right: 1px solid hsla(0, 100%, 100%, 0.41);
+}
+
+.toolbar .button {
+	position: relative;
+}
+
+.toolbar .button.widget {
+	/*display: inline-block;*/
+	/*width: 30px;*/
+	/*width: 1.5em;*/
+	font-size: 70%;
+	height: 100%;
+	line-height: 150%;
+	cursor: pointer;
+	margin: 0 1px 0 1px;
+	padding: 0 0 0 0;
+	text-align: center;
+}
+
+.toolbar .button.text {
+	display: none;
+}
+
+.toolbar .button .icon {
+	background-color: inherit;
+	position: relative;
+}
+
+.toolbar .button .emblem {
+	position: absolute;
+	font-size: 70%;
+	bottom: 0px;
+	right: 0px;
+	line-height: 100%;
+	color: red;
+}
+
+.toolbar .button.active:not(.disabled) {
+	color: white;
+}
+
+
+.toolbar .button:hover {
+
+}
+
+/*.toolbar .button .tooltip:before {
+	position: absolute;
+	top: 10px;
+	left: 25%;
+	width: 0;
+	height: 0;
+	display: inline-block;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid  hsl(0, 0%, 22%);
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	content: '';
+	z-index: 2;
+}*/
+
+.toolbar .button .tooltip {
+	position: absolute;
+	left: 40%;
+	top: 110%;
+	width: 50px
+	opacity: 0;
+	visibility: hidden;
+	background: hsl(0, 100%, 64%);;
+	border-radius: 4px;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+	color: white;
+	font-size: 14px;
+	line-height: 12px;
+	padding: 8px 10px;
+	/*text-shadow: 0 -1px 0 #000000;*/
+	white-space: nowrap;
+}
+
+.toolbar .button:hover .tooltip {
+	opacity: 1;
+	visibility: visible;
+	border-bottom-color: #383838;
+	z-index: 2;
+}
+
+.toolbar .button {
+	font-size: 20px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	text-decoration: none;
+	margin: 0 1em;
+}
+
+.toolbar .button .icon {
+	margin-right: 0.5em;
+}
+
+.toolbar .button.widget:not(.disabled):hover {
+	/*text-shadow: 0 0 1px #fff;*/
+	background-color: rgba(0,0,0,0.4);
+}
+
+:not(.disabled).toolbar .button.toggle.active {
+	background-color: hsl(0, 0%, 0%);
+	color: white;
+	box-shadow: inset 0 0 2px hsl(0, 100%, 100%);
+}
+
+.toolbar .button.toggle.active.disabled {
+	background-color: rgba(0,0,0,0.1)
+}
+
+.toolbar.dropdown {
+}
+
+.toolbar .dropdown.container {
+	position: relative;
+	/*display: inline-block;*/
+	color: white;
+	height: 100%;
+}
+
+.toolbar .dropdown.button {
+
+}
+
+ul.toolbar .dropdown {
+	position: absolute;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	left: 0;
+	top: 30px;
+	border-radius: 2px;
+	border-color: none;
+	text-shadow: none;
+	background-image: none;
+	box-shadow: none;
+	background-repeat: none;
+	-webkit-box-shadow: none;
+	background-color: rgb(52, 52, 52);
+}
+
+li.toolbar .dropdown {
+	display: block;
+	cursor: pointer;
+	padding: 0px 13px 0px 13px;
+	border-color: none;
+	text-shadow: none;
+	background-image: none;
+	box-shadow: none;
+	background-repeat: none;
+	-webkit-box-shadow: none;
+	background-color: rgb(52, 52, 52);
+}
+
+li.toolbar .dropdown:hover {
+	background-color: blue;
+}
+
+li.toolbar .dropdown.active {
+	color: blue;
+}
+
+li.toolbar .dropdown.active:before {
+	content: "tick"
+}
+
+.toolbar .label.widget {
+	/*vertical-align: text-bottom;*/
+	font-size: 70%;
+	margin: 0 1em;
+}
+
+.toolbar .button.combobox.widget:hover {
+	background-color: inherit;
+}
+
+.toolbar .button.combobox.widget {
+	/*position: relative;
+	display: inline-block;
+	top: 0px;
+	height: 100%;
+	vertical-align: top;*/
+}
+
+.toolbar .combobox.container {
+	/*display: inline-block;*/
+	position: relative;
+	/*top: 4px;
+	width: 100%;
+	height: 20px;
+	vertical-align: top;*/
+	cursor: pointer;
+	padding: 0px 2px 0px 2px;
+	text-align: left;
+	border: 1px solid rgba(0,0,0,0.7);
+	border-radius: 5px;
+}
+
+.disabled .toolbar .combobox.container {
+	cursor: default;
+
+}
+
+:not(.disabled) > .toolbar .combobox.container:hover {
+}
+
+.toolbar .active .toolbar .combobox.container {
+
+}
+
+.toolbar .combobox.container:hover {
+	
+}
+
+.toolbar .combobox.label.widget {
+	display: inline-block;
+	position: relative;
+	border: 0px;
+	top: 0px;
+	height: 24px;
+	line-height: 22px;
+	font-size: 14px;
+	padding-left: 2px;
+	padding-right: 2px;
+	vertical-align: top;
+	overflow: hidden;
+}
+
+.toolbar .combobox.label.selected-text {
+
+}
+
+.toolbar .combobox.label.description {
+
+}
+
+.disabled .toolbar .combobox.label.widget, .disabled .toolbar .combobox.indicator {
+	color: inherit;
+}
+
+.toolbar .combobox.indicator {
+	display: inline-block;
+	position: absolute;
+	top: 0px;
+	right: 3px;
+	width: 10px;
+	height: 26px;
+	padding: 0px;
+	font-size: 15px;
+	line-height: 22px;
+	vertical-align: top;
+	margin-left: 3px;
+}
+
+.toolbar .combobox {
+	white-space: nowrap;
+}
+
+.toolbar .combobox.menu {
+	z-index: 888;
+}
+
+.toolbar .combobox.menu.widget {
+	position: absolute;
+	display: none;
+	top: 28px;
+	min-width: 100%;
+	left: 0px;
+	height: auto;
+	text-align: left;
+	background-color: #292824;
+	margin: 0px;
+}
+
+.toolbar .active  .combobox.menu.widget {
+	display: block;
+}
+
+.toolbar .combobox.menu.label {
+	display: block;
+	position: relative;
+	padding-left: 0px;
+	margin-left: 0px;
+	width: 75px;
+	height: 20px;
+	cursor: pointer;
+	border-radius: 0px;
+	background-color: rgba(0,0,0,0);
+	padding: 5px;
+}
+
+.toolbar .combobox.label.description {
+	margin-right: 3px;
+}
+
+.toolbar .combobox.label.description:after {
+	content: ':';
+}
+
+.toolbar .combobox.menu.entry.widget {
+	position: relative;
+	top: 0px;
+	font-size: 14px;
+}
+
+.toolbar .combobox.menu.entry.widget:hover {
+	background-color: #b65611;
+}
+
+.toolbar .combobox.menu.entry.selected {
+	
+}
+
+.toolbar .combobox.menu.entry.selected:before {
+}
+
+.toolbar .combobox.menu.entry.tick {
+	display: inline-block;
+	margin: 0px 2px 0px 2px;
+	font-size: 12px;
+}
+
+.toolbar :not(.selected) > .combobox.menu.entry.tick {
+	visibility: hidden;
+}
+
+.toolbar .combobox.menu.entry.text {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+.toolbar .combobox.menu.entry:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.toolbar .combobox.menu.entry:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+
+.toolbar .slider-menu {
+	background-color: #111;
+	border-radius: 4px;
+	z-index: 888;
+	display: none;
+	position: absolute;
+	left: 0px;
+	top: 28px;
+	height: 40px;
+	width: 200px;
+}
+
+.toolbar .active .slider-menu {
+	display: block;
+}
+
+.toolbar .slider-menu input.slider {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	top: 17px;
+	bottom: 17px;
+	
+	-webkit-appearance:none;
+	-moz-apperance:none;
+	height: 2px;
+	border-radius: 4px;
+	background-color: #888;
+}
+
+.toolbar .slider-menu input.slider:focus {
+	outline: none;
+}
+
+.toolbar .slider-menu input.slider::-moz-range-track {
+	border: none;
+}
+
+.toolbar .slider-menu input.slider::-moz-range-thumb {
+	-webkit-appearance:none;
+	-moz-apperance:none;
+	width:14px;
+	height:14px;
+	border-radius: 12px;
+	border: 1px solid rgba(0,0,0,0.25);
+	background: #CCC;
+	background: radial-gradient(45px 45px, #fbb450 0%, #f89406 25%, #f89406 100%);
+	position: relative;
+}
+
+.toolbar .slider-menu input.slider::-webkit-slider-thumb {
+	-webkit-appearance:none;
+	-moz-apperance:none;
+	width:14px;
+	height:14px;
+	border-radius: 12px;
+	border: 1px solid rgba(0,0,0,0.25);
+	background: #CCC;
+	background: -webkit-radial-gradient(top left, #fbb450 0%, #f89406 25%, #f89406 100%);
+	position: relative;
+}
+
+
+.toolbar .proxy.item {
+	margin: 0px;
+	display: inline-block;
+	position: relative;
+}
+
+.toolbar .read-only {
+	display: inline-block;
+	font-size: 70%;
+	color: rgb(227, 231, 180);
+	text-shadow: 0px 1px 1px black;
+	font-family: Interface;
+	/*vertical-align: 3px;*/
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.toolbar .help {
+	position: absolute;
+	right: 0;
+	top: 0;
+	color: silver;
+	padding: 5px;
+}
+
+.toolbar .combobox.widget.hidden, .toolbar .button.widget.hidden {
+	display: none;
+}
+
+.toolbar .widget.disabled {
+	color: rgb(85, 85, 119);
+	cursor: default;
+}
+
+.toolbar .search-box .selection, .toolbar .search-box input[type="text"] {
+	margin: 1px 0px 3px 2px;
+}
+
+
+.toolbar .search-box .icon-search, .toolbar .search-box .icon-remove-circle {
+	padding: 3px;
+	font-size: 90%;
+}

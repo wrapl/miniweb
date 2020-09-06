@@ -215,8 +215,17 @@ function create(tag, attrs) {
 			element.appendChildren(children);
 		}
 	} else {
-		element = new tag(attrs);
-		children.forEach(child => element.addChild(child));
+		element = new tag(attrs || {});
+		function appendChildren(element, children) {
+			children.forEach(child => {
+				if (child instanceof Array) {
+					appendChildren(element, child);
+				} else {
+					element.addChild(child);
+				}
+			});
+		}
+		appendChildren(element, children);
 	}
 	return element;
 }
