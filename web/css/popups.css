@@ -12,7 +12,7 @@
 .popup-dialog-centre {
 	display: table-cell;
 	text-align: center;
-	vertical-align: 200px;
+	vertical-align: middle;
 }
 
 .popup-dialog {
