@@ -1,0 +1,56 @@
+.blur {
+	filter: grayscale(100%);
+	-webkit-filter: grayscale(100%);
+}
+
+.hidden {
+	display: none !important;
+}
+
+.table {
+	display: table;
+}
+
+.table-row {
+	display: table-row;
+}
+
+.table-cell {
+	display: table-cell;
+}
+
+.center {
+	text-align: center;
+}
+
+.pulse-font-size {
+	-webkit-animation-duration: 0.1s;
+	-webkit-animation-name: pulse-font-size;
+	-webkit-animation-iteration-count: 4;
+	-webkit-animation-direction: alternate;
+	-moz-animation-duration: 0.1s;
+	-moz-animation-name: pulse-font-size;
+	-moz-animation-iteration-count: 4;
+	-moz-animation-direction: alternate;
+}
+
+@-webkit-keyframes pulse-font-size {
+	from {
+		text-shadow: 0px 0px 0px white;
+	}
+
+	to {
+		text-shadow: 0px 0px 5px white;
+	}
+}
+
+@-moz-keyframes pulse-font-size {
+	from {
+		color: gray;
+	}
+
+	to {
+		color: white;
+	}
+}
+

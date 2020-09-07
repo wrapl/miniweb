@@ -63,7 +63,7 @@ export const LabelT = _class(ItemT, labelInit, {
 function labelInit(item, attrs) {
 	item.type = 'label'
 	itemInit(item, attrs, <span className='label widget'>
-		{attrs.icon && createIcon(attrs.icon)}
+		{attrs.icon && <i className={'icon ' + attrs.icon}/>}
 		{attrs.text}
 	</span>)
 }
@@ -87,11 +87,14 @@ function buttonInit(item, attrs) {
 	
 	item.element.addEventListener('mousedown', function(mouseEvent) {
 		mouseEvent.preventDefault()
-		if (itemIsSensitive(item)) item.emit('clicked')
-		document.onmouseup = function() {
-			mouseEvent.preventDefault()
-			document.onmouseup = null
+		if (itemIsSensitive(item)) {
 			item.emit('clicked')
+		} else {
+			document.onmouseup = function(mouseEvent) {
+				mouseEvent.preventDefault()
+				document.onmouseup = null
+				item.emit('clicked')
+			}
 		}
 	})
 }

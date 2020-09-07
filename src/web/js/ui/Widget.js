@@ -11,7 +11,9 @@ export const T = _class(null, init, {
 	addSuggestion: addSuggestion,
 	removeConstraint: removeConstraint,
 	defaultSize: defaultSize,
-	computeSize: computeSize
+	computeSize: computeSize,
+	addBlur: addBlur,
+	removeBlur: removeBlur	
 });
 
 export function init(self, attrs, element) {
@@ -20,6 +22,7 @@ export function init(self, attrs, element) {
 	self.size = {width: 0, height: 0};
 	self.border = {top: 0, bottom: 0, left: 0, right: 0};
 	self.minSize = null;
+	self.blur = 0;
 	if (!element) element = <div/>;
 	element.id = self.id;
 	element.style.position = "absolute";
@@ -91,4 +94,14 @@ function defaultSize(self) {
 
 function computeSize(self) {
 	return {}
+}
+
+function addBlur(self) {
+	if (!self.blur) self.element.addClass("blur");
+	++self.blur;
+}
+
+function removeBlur(self) {
+	--self.blur;
+	if (!self.blur) self.element.removeClass("blur");
 }

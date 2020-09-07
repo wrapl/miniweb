@@ -9,12 +9,27 @@ import * as Frame from 'ui/Frame';
 import * as Grid from 'ui/Grid';
 import * as Toolbar from 'ui/Toolbar';
 import * as Tabbed from 'ui/Tabbed';
+import * as Dialog from 'ui/Dialog';
 
 export const T = _class(App.T, init);
 
 function localeChanged(item, child) {
 	app.setLocale(child.value);
 	item.label.replaceChildren(child.label.cloneNode(true));
+}
+
+function showDialog() {
+	let dialog = new Dialog.T("Test Dialog!",
+		"This is a test dialog!",
+		{
+			"Cancel": null,
+			"Test": dialog => {
+				console.log("Test action taken");
+				dialog.close();
+			}
+		}
+	);
+	dialog.run();
 }
 
 export function init(self) {
@@ -38,6 +53,7 @@ export function init(self) {
 		<Toolbar.T position={[0, 0, 0, 0]}>
 			<Toolbar.LabelT>Button:</Toolbar.LabelT>
 			<Toolbar.ButtonT icon="fa fa-file" on-clicked={() => console.log("Clicked!")}>Click Me!</Toolbar.ButtonT>
+			<Toolbar.ButtonT icon="fa fa-alert" on-clicked={showDialog}>Alert!</Toolbar.ButtonT>
 			<Toolbar.ComboboxT on-changed={localeChanged}>
 				Select Locale
 				{langs.map(lang => {
