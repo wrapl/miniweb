@@ -1,8 +1,7 @@
 import "lib/Class";
 
 export const T = _class(null, init, {
-	appendChild: appendChild,
-	appendChildren: appendChildren,
+	addChild: addChild,
 	position: position,
 	resize: resize,
 	hide: hide,
@@ -38,12 +37,8 @@ export function init(self, attrs, element) {
 	self.attrs = attrs;
 }
 
-function appendChild(self, child) {
+function addChild(self, child) {
 	self.element.appendChild(child);
-}
-
-function appendChildren(self) {
-	self.element.appendChildren(Array.prototype.slice.call(arguments, 1));
 }
 
 function position(self, x, y, width, height) {

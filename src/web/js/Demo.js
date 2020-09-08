@@ -5,11 +5,15 @@ import { langs } from 'lang';
 import { isoLangs } from 'ISOCodes';
 import * as HPaned from 'ui/HPaned';
 import * as VPaned from 'ui/VPaned';
+import * as HBox from 'ui/HBox';
+import * as VBox from 'ui/VBox';
 import * as Frame from 'ui/Frame';
 import * as Grid from 'ui/Grid';
 import * as Toolbar from 'ui/Toolbar';
 import * as Tabbed from 'ui/Tabbed';
 import * as Dialog from 'ui/Dialog';
+import * as Window from 'ui/Window';
+import * as Widget from 'ui/Widget';
 
 export const T = _class(App.T, init);
 
@@ -32,6 +36,27 @@ function showDialog() {
 	dialog.run();
 }
 
+function showWindow() {
+	let window = <Window.T title="I'm a movable window!">
+		<Grid.T>
+			<Widget.T position={[0, 0, 0, 0]}>
+				<div style="background:red;width:100%;height:100%;"/>
+			</Widget.T>
+			<Widget.T position={[1, 0, 1, 0]}>
+				<div style="background:green;width:100%;height:100%;"/>
+				</Widget.T>
+			<Widget.T position={[0, 1, 0, 1]}>
+				<div style="background:blue;width:100%;height:100%;"/>
+				</Widget.T>
+			<Widget.T position={[1, 1, 1, 1]}>
+				<div style="background:yellow;width:100%;height:100%;"/>
+			</Widget.T>
+		</Grid.T>
+	</Window.T>;
+	window.connect("closed", (window) => window.close());
+	window.show();
+}
+
 export function init(self) {
 	var taskList = new TaskList.T();
 
@@ -39,7 +64,13 @@ export function init(self) {
 		<TaskListView.T taskList={taskList}/>
 	</Frame.T>;
 	let tab2 = <Frame.T title="Task List 2" titleHeight={20}>
-		<TaskListView.T taskList={taskList}/>
+		<HBox.T>
+			<TaskListView.T taskList={taskList}/>
+			<VBox.T>
+				<TaskListView.T taskList={taskList}/>
+				<TaskListView.T taskList={taskList}/>
+			</VBox.T>
+		</HBox.T>
 	</Frame.T>;
 	let tab3 = <Frame.T title="Task List 3" titleHeight={20}>
 		<VPaned.T>
@@ -54,6 +85,7 @@ export function init(self) {
 			<Toolbar.LabelT>Button:</Toolbar.LabelT>
 			<Toolbar.ButtonT icon="fa fa-file" on-clicked={() => console.log("Clicked!")}>Click Me!</Toolbar.ButtonT>
 			<Toolbar.ButtonT icon="fa fa-alert" on-clicked={showDialog}>Alert!</Toolbar.ButtonT>
+			<Toolbar.ButtonT icon="fa fa-alert" on-clicked={showWindow}>Window</Toolbar.ButtonT>
 			<Toolbar.ComboboxT on-changed={localeChanged}>
 				Select Locale
 				{langs.map(lang => {

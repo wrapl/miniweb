@@ -27,7 +27,7 @@ function addChild(self, widget) {
 	var orderedChildren = self.orderedChildren
 	var solver = self.solver
 	self.solver.unconstrain(self.heightConstraint)
-	var v = solver.variable("Row", 0)
+	var v = solver.variable("row", 0)
 	rowVars.push(v)
 	var expression = heightVar
 	for (var i = 0; i < rowVars.length; ++i) expression = expression.sub(rowVars[i])
@@ -187,7 +187,7 @@ function resize(self, width, height) {
 	var heightVar = self.heightVar
 	var rowVars = self.rowVars
 
-	for (var i = 0; i < rowVars.length; ++i) solver.stay(rowVars[i], 1)
+	for (var i = 0; i < rowVars.length; ++i) solver.stay(rowVars[i], 100)
 	solver.suggest(widthVar, width)
 	solver.suggest(heightVar, height)
 	solver.resolve()

@@ -27,7 +27,7 @@ function addChild(self, widget) {
 	var orderedChildren = self.orderedChildren
 	var solver = self.solver
 	self.solver.unconstrain(self.widthConstraint)
-	var v = solver.variable("Col", 0)
+	var v = solver.variable("col", 0)
 	colVars.push(v)
 	var expression = widthVar
 	for (var i = 0; i < colVars.length; ++i) expression = expression.sub(colVars[i])

@@ -225,3 +225,48 @@ body, * {
 	position: absolute;
 	background-color: blue;
 }
+
+.window {
+	position: absolute;
+	z-index: 999;
+	background: gray;
+	box-shadow: 4px 4px 3px black ;
+}
+
+.window .title {
+	background: black;
+	color: white;
+	padding: 0.5em;
+	text-align: center;
+	user-select: none;
+}
+
+.window .title .buttons {
+	float: right;
+}
+
+.window .content {
+	position: relative;
+}
+
+.window .resizer {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 10px;
+	height: 10px;
+	border-right: 10px solid black;
+	border-bottom: 10px solid black;
+	border-top: 10px solid transparent;
+	border-left: 10px solid transparent;
+	z-index: 1000;
+	cursor: all-scroll;
+}
+
+.paned-slider.vertical {
+	cursor: col-resize;
+}
+
+.paned-slider.horizontal {
+	cursor: row-resize;
+}

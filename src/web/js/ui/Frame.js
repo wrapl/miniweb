@@ -1,8 +1,8 @@
 import * as Widget from "ui/Widget";
 
 export const T = _class(Widget.T, init, {
-	resize: resize,
-	addChild: addChild
+	addChild: addChild,
+	resize: resize
 })
 
 function init(self, attrs) {
@@ -18,10 +18,6 @@ function init(self, attrs) {
 	titleStyle.marginTop = titleStyle.marginLeft = titleStyle.marginRight = self.margin + "px"
 }
 
-function resize(self, width, height) {
-	self.child.position(self.padding, self.padding, width - 2 * (self.margin + self.borderWidth + self.padding), height - 2 * (self.margin + self.borderWidth + self.padding) - self.titleHeight)
-}
-
 function addChild(self, child) {
 	self.child = child
 	var childElement = <div className="child" style="position:relative;">{child.element}</div>
@@ -31,4 +27,8 @@ function addChild(self, child) {
 	childStyle.top = self.margin + self.titleHeight + "px"
 	childStyle.borderLeftWidth = childStyle.borderRightWidth = childStyle.borderBottomWidth = self.borderWidth + "px"
 	child.parent = self
+}
+
+function resize(self, width, height) {
+	self.child.position(self.padding, self.padding, width - 2 * (self.margin + self.borderWidth + self.padding), height - 2 * (self.margin + self.borderWidth + self.padding) - self.titleHeight)
 }

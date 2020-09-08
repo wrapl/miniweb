@@ -138,8 +138,8 @@ export function resize(self, width, height) {
 	var rowVars = self.rowVars
 	var colVars = self.colVars
 	
-	for (var i = 0; i < rowVars.length; ++i) solver.stay(rowVars[i], 1)
-	for (var i = 0; i < colVars.length; ++i) solver.stay(colVars[i], 1)
+	for (var i = 0; i < rowVars.length; ++i) solver.stay(rowVars[i], 100)
+	for (var i = 0; i < colVars.length; ++i) solver.stay(colVars[i], 100)
 	solver.suggest(widthVar, width, 1000000)
 	solver.suggest(heightVar, height, 1000000)
 	solver.resolve()
